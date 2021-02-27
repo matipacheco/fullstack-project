@@ -8,7 +8,7 @@ module Api
     # Params:
     # - q: The search term.
     def index
-      return render json: { success: false } unless (response = Giphy::GiphService.search(params[:q]))
+      return render json: { success: false, status: 500 } unless (response = Giphy::GiphService.search(params[:q]))
 
       render json: {
         success: true,
