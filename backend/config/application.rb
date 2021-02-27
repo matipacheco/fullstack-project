@@ -17,5 +17,6 @@ module Backend
     # the framework and any gems in your application.
 
     require './config/initializers/secrets_initializer'
+    require './app/services/giph_service'
   end
 end
