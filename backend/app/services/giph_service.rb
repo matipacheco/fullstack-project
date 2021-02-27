@@ -13,7 +13,7 @@ module Giphy
     # - limit: The maximum amount of elements to be fetched.
     def self.search(q, limit = 10)
       response = get(BASE_URL + 'search', { query: { q: q, limit: limit, api_key: AppCredentials[:shared][:giphy][:api_key] } })
-      return nil unless response.code !== 200
+      return nil unless response.code != 200
 
       response['data']
     end
