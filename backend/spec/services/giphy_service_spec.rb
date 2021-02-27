@@ -4,13 +4,7 @@ require 'rails_helper'
 
 describe Giphy::GiphService do
   describe 'Service consumption' do
-    let(:giph_data) do
-      {
-        'id' => 'ID',
-        'type' => 'giph',
-        'url' => 'giph_url'
-      }
-    end
+    let(:giph) { create(:giph) }
 
     context 'when API responds successfully' do
       before do
@@ -19,7 +13,7 @@ describe Giphy::GiphService do
           .to_return(
             status: 200,
             body: {
-              data: [giph_data]
+              data: [giph]
             }.to_json
           )
       end

@@ -3,13 +3,7 @@
 require 'rails_helper'
 
 describe Api::ImagesController do
-  let(:giph_data) do
-    {
-      'id' => 'ID',
-      'type' => 'giph',
-      'url' => 'giph_url'
-    }
-  end
+  let(:giph) { create(:giph) }
 
   describe 'GET index' do
     it 'calls VideoService fetch_videos' do
@@ -24,7 +18,7 @@ describe Api::ImagesController do
           .to_return(
             status: 200,
             body: {
-              data: [giph_data]
+              data: [giph]
             }.to_json
           )
 
