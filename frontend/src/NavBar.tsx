@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, Button, Form, FormControl } from 'react-bootstrap';
+import { Navbar, Nav, Button } from 'react-bootstrap';
 
 function NavBar() {
   return (
@@ -8,10 +8,8 @@ function NavBar() {
       <Nav className="mr-auto">
         <Nav.Link href="#favorites">Favorites</Nav.Link>
       </Nav>
-      <Form inline>
-        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-        <Button variant="outline-info">Search</Button>
-      </Form>
+
+      <Button variant="info">Login</Button>
     </Navbar>
   )
 }
