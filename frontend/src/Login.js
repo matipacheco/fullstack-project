@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container, Form, Spinner } from 'react-bootstrap';
+import { AppContext } from './context/Context';
 import { login } from './utils/requests';
 import { handleEnterKey } from './utils/accessibility';
+import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState({ username: '', password: '' });
   const [showError, setShowError] = useState(false);
   const [submitEnabled, setSubmitEnabled] = useState(false);
+  const [user, setUser] = useState({ username: '', password: '' });
+
+  const appContext = useContext(AppContext);
 
   useEffect(() => {
     setSubmitEnabled(!_.isEmpty(user.username) && !_.isEmpty(user.password));
@@ -27,14 +31,16 @@ export default function Login() {
   const handleResponse = (response) => {
     setLoading(false);
 
-    if (response.code !== 200) {
-      setShowError(true);
+    if (response.logged_in) {
+      appContext.updateUser(response.user);
+      return <Redirect to='/'/>
+
     } else {
-      
+      setShowError(true);
     }
   };
 
-  const handleError = (response) => {
+  const handleError = () => {
     setLoading(false);
     setShowError(true);
   };
@@ -53,7 +59,10 @@ export default function Login() {
 
   const handleOnKeyUp = (event) => {
     event.preventDefault();
-    handleEnterKey(event, doLogin);
+
+    if (submitEnabled) {
+      handleEnterKey(event, doLogin);
+    }
   };
 
   return (
@@ -67,6 +76,7 @@ export default function Login() {
               name="username"
               placeholder="Enter username"
               onChange={handleOnChange}
+              onKeyUp={handleOnKeyUp}
             />
           </Form.Group>
 
@@ -83,7 +93,7 @@ export default function Login() {
 
           {showError && <p className="red">Incorrect username or password. Please try again.</p>}
 
-          <div className={`btn btn-primary ${submitEnabled ? '': 'disabled'}`} onClick={handleOnClick}>
+          <div className={`btn btn-primary ${submitEnabled ? '' : 'disabled'}`} onClick={handleOnClick}>
             {loading ? <Spinner as="span" animation="border" variant="light" size="sm" role="status" /> : 'Login'}
           </div>
         </Form>

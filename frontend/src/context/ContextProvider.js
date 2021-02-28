@@ -3,6 +3,7 @@ import { AppContext, AppContextProvider } from './Context';
 
 const ProviderWrapper = (props) => {
   const appContext = useContext(AppContext);
+  const [user, setUser] = useState(appContext.user);
   const [error, setError] = useState(appContext.error);
   const [images, setImages] = useState(appContext.images);
 
@@ -14,9 +15,15 @@ const ProviderWrapper = (props) => {
     setError(value);
   };
 
+  const updateUser = (userData) => {
+    setUser(userData);
+  };
+
   const provider = {
+    user,
     error,
     images,
+    updateUser,
     updateError,
     updateImages,
   };

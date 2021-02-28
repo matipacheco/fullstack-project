@@ -1,7 +1,6 @@
 import React from 'react';
 import Search from './Search';
 import ImagesWrapper from './ImagesWrapper';
-import ProviderWrapper from './context/ContextProvider';
 import './App.scss'
 
 /**
@@ -12,11 +11,8 @@ import './App.scss'
 function App() {
   return (
     <div>
-      <ProviderWrapper>
-        <Search />
-
-        <ImagesWrapper />
-      </ProviderWrapper>
+      <Search />
+      <ImagesWrapper />
     </div>
   );
 }

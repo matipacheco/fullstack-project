@@ -5,6 +5,7 @@ import App from './App';
 import Signup from './Signup';
 import NavBar from './NavBar';
 import Login from './Login';
+import ProviderWrapper from './context/ContextProvider';
 
 /**
  * @function RoutedApp
@@ -16,21 +17,23 @@ export default function RoutedApp() {
 
   return (
     <Router history={history}>
-      <NavBar />
+      <ProviderWrapper>
+        <NavBar />
 
-      <Switch>
-        <Route exact path="/signup">
-          <Signup />
-        </Route>
+        <Switch>
+          <Route exact path="/signup">
+            <Signup />
+          </Route>
 
-        <Route exact path="/login">
-          <Login />
-        </Route>
+          <Route exact path="/login">
+            <Login />
+          </Route>
 
-        <Route path="/">
-          <App />
-        </Route>
-      </Switch>
+          <Route path="/">
+            <App />
+          </Route>
+        </Switch>
+      </ProviderWrapper>
     </Router>
   )
 };
