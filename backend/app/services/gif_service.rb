@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-# Handles giph consumption through Giphy's API.
+# Handles gif consumption through Giphy's API.
 module Giphy
-  class GiphService
+  class GifService
     include HTTParty
 
     BASE_URL = 'https://api.giphy.com/v1/gifs/'
 
-    # Returns a list of giphs that match a given search term.
+    # Returns a list of gifs that match a given search term.
     # Params:
     # - q: The search term.
     # - limit: The maximum number of elements to be fetched.

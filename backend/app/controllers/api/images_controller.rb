@@ -4,11 +4,11 @@ module Api
   class ImagesController < ApplicationController
     before_action :permit_search_params, only: :index
 
-    # Returns a list of giphs that match a given search term.
+    # Returns a list of gifs that match a given search term.
     # Params:
     # - q: The search term.
     def index
-      return render json: { success: false, status: 500 } unless (response = Giphy::GiphService.search(params[:q]))
+      return render json: { success: false, status: 500 } unless (response = Giphy::GifService.search(params[:q]))
 
       render json: {
         success: true,

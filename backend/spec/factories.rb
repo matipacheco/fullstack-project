@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :giph, class: OpenStruct do
+  factory :gif, class: OpenStruct do
     skip_create
 
     id { 'ID' }
-    type { 'giph' }
-    url { 'giph_url' }
+    type { 'gif' }
+    url { 'gif_url' }
   end
 end
