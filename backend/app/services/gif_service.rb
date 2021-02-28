@@ -21,7 +21,7 @@ module Giphy
                      })
       return nil if response.code != 200
 
-      response['data'].map do |image_data|
+      parse_response(response).map do |image_data|
         deserialize(image_data)
       end
     end
@@ -38,9 +38,17 @@ module Giphy
                      })
       return nil if response.code != 200
 
-      response['data'].map do |image_data|
+      parse_response(response).map do |image_data|
         deserialize(image_data)
       end
+    end
+
+    # Parses API JSON response into a readable hash.
+    # Params:
+    # - response: API's response.
+    # - field: Specific field of the API response that wants to be parsed.
+    def self.parse_response(response, field = 'data')
+      JSON.parse(response.body)[field]
     end
 
     # Transforms the API response into a Image instance.

@@ -19,6 +19,8 @@ class Image
   # If that field is not found, it returns the URL of the original image in the array.
   # Params: -
   def build_url
+    return unless @images
+
     fixed_height_small = @images['fixed_height_small']
     fixed_height_small.present? ? fixed_height_small['url'] : @images['original']['url']
   end

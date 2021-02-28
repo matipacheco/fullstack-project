@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Giphy::GifService do
-  let(:gif) { create(:gif) }
+  let(:image) { create(:image) }
 
   describe 'search_method' do
     context 'when API responds successfully' do
@@ -13,7 +13,7 @@ describe Giphy::GifService do
           .to_return(
             status: 200,
             body: {
-              data: [gif]
+              data: [image]
             }.to_json
           )
       end
@@ -38,7 +38,7 @@ describe Giphy::GifService do
   end
 
   describe 'get_gifd method' do
-    let!(:second_gif) { create(:gif, id: 'ID2') }
+    let!(:second_image) { create(:image, id: 'ID2') }
 
     context 'when API responds successfully' do
       before do
@@ -47,13 +47,13 @@ describe Giphy::GifService do
           .to_return(
             status: 200,
             body: {
-              data: [gif, second_gif]
+              data: [image, second_image]
             }.to_json
           )
       end
 
       it "returns API's response" do
-        response = described_class.get_gifs([gif.id, second_gif.id])
+        response = described_class.get_gifs([image.id, second_image.id])
         expect(response).not_to be_empty
       end
     end
@@ -66,7 +66,7 @@ describe Giphy::GifService do
       end
 
       it "returns nil response" do
-        expect(described_class.get_gifs([gif.id, second_gif.id])).to be_nil
+        expect(described_class.get_gifs([image.id, second_image.id])).to be_nil
       end
     end
   end
