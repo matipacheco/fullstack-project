@@ -6,6 +6,12 @@ import { handleEnterKey } from './utils/accessibility';
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
+/**
+ * @function Login
+ * Component in charge of collecting the user's credentials,
+ * and submitting them to the API's authentication endpoint.
+ */
+
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -33,7 +39,6 @@ export default function Login() {
 
     if (response.logged_in) {
       appContext.updateUser(response.user);
-      return <Redirect to='/'/>
 
     } else {
       setShowError(true);
@@ -67,6 +72,12 @@ export default function Login() {
 
   return (
     <div className="credentials-form">
+      {
+        !_.isEmpty(appContext.user) && (
+          <Redirect to="/" />
+        )
+      }
+
       <Container>
         <Form>
           <Form.Group controlId="formBasicEmail">

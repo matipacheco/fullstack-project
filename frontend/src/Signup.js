@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { Container, Form } from 'react-bootstrap';
 
+/**
+ * @function Signup
+ * Component in charge of collecting the user's data,
+ * and submitting it to the API's so that a new user gets created.
+ */
+
 export default function Signup() {
   const [submitEnabled, setSubmitEnabled] = useState(false);
 
