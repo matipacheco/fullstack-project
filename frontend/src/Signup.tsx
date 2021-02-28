@@ -23,7 +23,7 @@ export default function Signup() {
             <Form.Control type="password" placeholder="Password confirmation" />
           </Form.Group>
 
-          <div className={`btn btn-primary ${submitEnabled}`}>
+          <div className={`btn btn-primary ${submitEnabled ? '': 'disabled'}`}>
             Create account
           </div>
         </Form>

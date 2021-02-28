@@ -9,7 +9,7 @@ import axios from 'axios';
  * @public
  */
 
-const search = (searchTerm, successCallback, errorCallback) => {
+export const search = (searchTerm, successCallback, errorCallback) => {
   axios
     .get('http://127.0.0.1:3010/api/images/search', {
       params: {
@@ -24,17 +24,30 @@ const search = (searchTerm, successCallback, errorCallback) => {
     });
 };
 
-// TODO: login endpoint
-// const login = (userData, successCallback, errorCallback) => {
-//   axios
-//     .get('http://127.0.0.1:3010/api/authenticate', {
-//       params: {
-//         email: userData.email,
-//         password: userData.password,
-//       },
-//     })
-//     ...
-// };
+/**
+ * Authenticates user to the API.
+ *
+ * @param {object} userData ({ user: { username: '', password: '' } })
+ * @param {function} successCallback
+ * @param {function} errorCallback
+ * @public
+ */
+
+export const login = (userData, successCallback, errorCallback) => {
+  axios
+    .post('http://127.0.0.1:3010/api/login', {
+      user: {
+        username: userData.username,
+        password: userData.password
+      },
+    })
+    .then((response) => {
+      successCallback(response.data);
+    })
+    .catch((error) => {
+      errorCallback(error);
+    });
+};
 
 // TODO: list all favorites endpoint
 // const setAsFavorite = (userId, successCallback, errorCallback) => {
@@ -57,5 +70,3 @@ const search = (searchTerm, successCallback, errorCallback) => {
 //     })
 //     ...
 // };
-
-export { search };
