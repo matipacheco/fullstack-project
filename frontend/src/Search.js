@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { AppContext } from './context/Context';
-import { search } from './utils/requests';
 import { Spinner, Button } from 'react-bootstrap';
+import { search } from './utils/requests';
+import { handleEnterKey } from './utils/accessibility';
 import _ from 'lodash';
 
 /**
@@ -59,9 +60,7 @@ export default function Search() {
   const handleOnKeyUp = (event) => {
     event.preventDefault();
 
-    if (event.keyCode === 13 || event.key === 'ENTER') {
-      handleSearch();
-    }
+    handleEnterKey(event, handleSearch);
   };
 
   return (
