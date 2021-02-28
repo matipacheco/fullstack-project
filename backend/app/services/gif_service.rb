@@ -21,17 +21,9 @@ module Giphy
                      })
       return nil if response.code != 200
 
-      response['data']
-    end
-    
-    # Returns the information of a particular gif.
-    # Params:
-    # - gif_id: Giphy's ID of the gif.
-    def self.get_gif(gif_id)
-      response = get(BASE_URL + "/#{gif_id}", { query: { api_key: AppCredentials[:shared][:giphy][:api_key] } })
-      return nil if response.code != 200
-
-      response['data']
+      response['data'].map do |image_data|
+        deserialize(image_data)
+      end
     end
 
     # Returns the information of a group of gifs.
@@ -46,7 +38,20 @@ module Giphy
                      })
       return nil if response.code != 200
 
-      response['data']
+      response['data'].map do |image_data|
+        deserialize(image_data)
+      end
+    end
+
+    # Transforms the API response into a Image instance.
+    # Params:
+    # - image_data: Image's information returned by the API.
+    def self.deserialize(image_data)
+      Image.new(
+        id: image_data['id'],
+        title: image_data['title'],
+        images: image_data['images']
+      )
     end
   end
 end

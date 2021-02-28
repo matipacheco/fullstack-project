@@ -9,7 +9,7 @@ import { Card, Button } from 'react-bootstrap';
 export default function Image(props) {
   return (
     <Card>
-      <Card.Img variant="top" src={props.images.fixed_height_small.url} />
+      <Card.Img variant="top" src={props.url} />
       <Card.Body>
         <Card.Title>{props.title}</Card.Title>
         <Button variant="info">Add to favorites</Button>
