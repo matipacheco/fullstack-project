@@ -1,6 +1,11 @@
 import React from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 
+/**
+ * @function NavBar
+ * Simple nav bar that allows access to Favorites and Authentication sections.
+ */
+
 export default function NavBar() {
   return (
     <Navbar bg="dark" variant="dark">

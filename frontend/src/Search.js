@@ -1,9 +1,13 @@
 import React, { useState, useContext } from 'react';
+import { AppContext } from './context/Context';
+import { search } from './utils/requests';
 import { Spinner, Button } from 'react-bootstrap';
 
-import { AppContext } from './context/Context';
-
-import { search } from './utils/requests';
+/**
+ * @function Search
+ * Component in charge of handling GIF search
+ * It updates the search result in the application context
+ */
 
 export default function Search() {
   const [loading, setLoading] = useState(false);

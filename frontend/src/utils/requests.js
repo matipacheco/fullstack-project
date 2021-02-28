@@ -1,5 +1,14 @@
 import axios from 'axios';
 
+/**
+ * Fetches GIF information from the API.
+ *
+ * @param {string} searchTerm
+ * @param {function} successCallback
+ * @param {function} errorCallback
+ * @public
+ */
+
 const search = (searchTerm, successCallback, errorCallback) => {
   axios
     .get('http://127.0.0.1:3010/api/images', {
@@ -24,12 +33,7 @@ const search = (searchTerm, successCallback, errorCallback) => {
 //         password: userData.password,
 //       },
 //     })
-//     .then((response) => {
-//       successCallback(response);
-//     })
-//     .catch((error) => {
-//       errorCallback(error);
-//     });
+//     ...
 // };
 
 // TODO: list all favorites endpoint
@@ -40,12 +44,7 @@ const search = (searchTerm, successCallback, errorCallback) => {
 //         user_id: userId,
 //       },
 //     })
-//     .then((response) => {
-//       successCallback(response);
-//     })
-//     .catch((error) => {
-//       errorCallback(error);
-//     });
+//     ...
 // };
 
 // TODO: set as favorite endpoint
@@ -56,12 +55,7 @@ const search = (searchTerm, successCallback, errorCallback) => {
 //         gif_id: gifId,
 //       },
 //     })
-//     .then((response) => {
-//       successCallback(response);
-//     })
-//     .catch((error) => {
-//       errorCallback(error);
-//     });
+//     ...
 // };
 
 export { search };

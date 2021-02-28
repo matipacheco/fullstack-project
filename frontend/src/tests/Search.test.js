@@ -1,6 +1,3 @@
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
-
 import React from 'react';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import Search from '../Search';
