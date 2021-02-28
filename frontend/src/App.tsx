@@ -1,13 +1,19 @@
 import React from 'react';
 import NavBar from './NavBar';
 import Search from './Search';
+import ImagesWrapper from './ImagesWrapper';
+import ProviderWrapper from './context/ContextProvider';
 import './App.css'
 
 function App() {
   return (
     <div>
-      <NavBar />
-      <Search />
+      <ProviderWrapper>
+        <NavBar />
+        <Search />
+
+        <ImagesWrapper />
+      </ProviderWrapper>
     </div>
   );
 }

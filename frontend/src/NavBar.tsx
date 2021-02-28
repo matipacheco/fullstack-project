@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 
-function NavBar() {
+export default function NavBar() {
   return (
     <Navbar bg="dark" variant="dark">
       <Navbar.Brand href="#home">Images as a Service</Navbar.Brand>
@@ -13,5 +13,3 @@ function NavBar() {
     </Navbar>
   )
 }
-
-export default NavBar;
