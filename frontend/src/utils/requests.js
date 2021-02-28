@@ -11,7 +11,7 @@ import axios from 'axios';
 
 const search = (searchTerm, successCallback, errorCallback) => {
   axios
-    .get('http://127.0.0.1:3010/api/images', {
+    .get('http://127.0.0.1:3010/api/images/search', {
       params: {
         q: searchTerm,
       },

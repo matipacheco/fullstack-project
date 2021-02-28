@@ -16,7 +16,6 @@ module Backend
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    require './config/initializers/secrets_initializer'
     require './app/services/gif_service'
 
     config.middleware.insert_before 0, Rack::Cors do

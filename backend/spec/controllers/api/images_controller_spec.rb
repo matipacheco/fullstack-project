@@ -8,7 +8,7 @@ describe Api::ImagesController do
   describe 'GET index' do
     it 'calls VideoService fetch_videos' do
       Giphy::GifService.expects(:search).once
-      get :index, params: { q: 'dog' }
+      get :search, params: { q: 'dog' }
     end
 
     context "when Giphy::GifService communicates successfuly with Giphy's API" do
@@ -22,7 +22,7 @@ describe Api::ImagesController do
             }.to_json
           )
 
-        get :index, params: { q: 'dog' }
+        get :search, params: { q: 'dog' }
         expect(JSON.parse(response.body)['success']).to be_truthy
       end
     end
@@ -33,7 +33,7 @@ describe Api::ImagesController do
           .with(query: { q: 'dog', limit: 10, api_key: AppCredentials[:shared][:giphy][:api_key]})
           .to_return(status: 500)
 
-        get :index, params: { q: 'dog' }
+        get :search, params: { q: 'dog' }
         expect(JSON.parse(response.body)['success']).to be_falsey
       end
     end
