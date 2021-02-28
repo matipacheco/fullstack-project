@@ -13,8 +13,8 @@ import { signup } from './utils/requests';
  */
 
 export default function Signup() {
+  const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showError, setShowError] = useState(false);
   const [submitEnabled, setSubmitEnabled] = useState(false);
   const [user, setUser] = useState({ username: '', password: '', password_confirmation: '' });
 
@@ -27,11 +27,11 @@ export default function Signup() {
   const doSignup = () => {
     setLoading(true);
 
-    if (showError) {
-      setShowError(false);
+    if (!_.isEmpty(errors)) {
+      setErrors(false);
     }
 
-    signup(user, handleResponse, handleError);
+    signup(user, handleResponse);
   };
 
   const handleResponse = (response) => {
@@ -39,15 +39,9 @@ export default function Signup() {
 
     if (response.logged_in) {
       appContext.updateUser(response.user);
-
     } else {
-      setShowError(true);
+      setErrors(response.errors);
     }
-  };
-
-  const handleError = () => {
-    setLoading(false);
-    setShowError(true);
   };
 
   const handleOnClick = (event) => {
@@ -72,15 +66,11 @@ export default function Signup() {
 
   return (
     <div className="credentials-form">
-      {
-        !_.isEmpty(appContext.user) && (
-          <Redirect to="/" />
-        )
-      }
+      {!_.isEmpty(appContext.user) && <Redirect to="/" />}
 
       <Container>
         <Form>
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group>
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
@@ -89,9 +79,11 @@ export default function Signup() {
               onChange={handleOnChange}
               onKeyUp={handleOnKeyUp}
             />
+
+            {errors.username && <Form.Text className="red">{errors.username[0]}</Form.Text>}
           </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
+          <Form.Group>
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
@@ -100,10 +92,12 @@ export default function Signup() {
               onChange={handleOnChange}
               onKeyUp={handleOnKeyUp}
             />
+
+            {errors.password && <Form.Text className="red">{errors.password[0]}</Form.Text>}
           </Form.Group>
 
-          <Form.Group controlId="formBasicPasswordConfirmation">
-            <Form.Label>PasswordConfirmation</Form.Label>
+          <Form.Group>
+            <Form.Label>Password Confirmation</Form.Label>
             <Form.Control
               type="password"
               name="password_confirmation"
@@ -111,13 +105,21 @@ export default function Signup() {
               onChange={handleOnChange}
               onKeyUp={handleOnKeyUp}
             />
+
+            {user.password !== user.password_confirmation && (
+              <Form.Text className="red">passwords do not match</Form.Text>
+            )}
           </Form.Group>
 
-          <div className={`btn btn-primary ${submitEnabled ? '': 'disabled'}`} onClick={handleOnClick}>
-            {loading ? <Spinner as="span" animation="border" variant="light" size="sm" role="status" /> : 'Create account'}
+          <div className={`btn btn-primary ${submitEnabled ? '' : 'disabled'}`} onClick={handleOnClick}>
+            {loading ? (
+              <Spinner as="span" animation="border" variant="light" size="sm" role="status" />
+            ) : (
+              'Create account'
+            )}
           </div>
         </Form>
       </Container>
     </div>
-  )
+  );
 }
