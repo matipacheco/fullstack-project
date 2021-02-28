@@ -9,7 +9,7 @@ module Api
       @user = User.find_by(username: user_params[:username])
     
       if @user && @user.authenticate(user_params[:password])
-        login!
+        login
         render json: {
           logged_in: true,
           user: @user
@@ -25,7 +25,7 @@ module Api
     # Destroys session.
     # Params: -
     def destroy
-      logout!
+      logout
       render json: {
         status: 200,
         logged_out: true
