@@ -1,5 +1,4 @@
 import React from 'react';
-import NavBar from './NavBar';
 import Search from './Search';
 import ImagesWrapper from './ImagesWrapper';
 import ProviderWrapper from './context/ContextProvider';
@@ -14,7 +13,6 @@ function App() {
   return (
     <div>
       <ProviderWrapper>
-        <NavBar />
         <Search />
 
         <ImagesWrapper />

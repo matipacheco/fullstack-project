@@ -1,6 +1,16 @@
+nav {
+  .button-group {
+    display: flex;
+
+    div {
+      margin: 0 .5rem;
+    }
+  }
+}
+
 #search {
   max-width: 25rem;
-  margin: 2rem auto 1rem;
+  margin: 3rem auto;
   display: flex;
 
   .btn {
@@ -36,4 +46,12 @@
 .empty {
   margin: 2rem 0;
   text-align: center;
+}
+
+.credentials-form {
+  margin: 3rem auto;
+
+  .container {
+    width: 40%;
+  }
 }
