@@ -18,5 +18,12 @@ module Backend
 
     require './config/initializers/secrets_initializer'
     require './app/services/gif_service'
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: :any
+      end
+    end
   end
 end
