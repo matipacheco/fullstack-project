@@ -8,6 +8,6 @@ Rails.application.routes.draw do
     end
 
     resources :users, only: :create
-    resources :favorites, only: %i[create destroy]
+    resources :favorites, only: %i[index create destroy]
   end
 end

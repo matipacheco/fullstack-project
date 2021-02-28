@@ -32,4 +32,33 @@ describe Api::FavoritesController do
       end
     end
   end
+
+  describe 'DELETE destroy' do
+    let!(:favorite) { create(:favorite, user: user) }
+
+    context 'user is not logged in' do
+      it 'returns error' do
+        delete :destroy, params: { id: favorite.id }
+
+        parsed_response = JSON.parse(response.body)
+        expect(parsed_response['status']).to eq(401)
+        expect(parsed_response['errors']).to eq('Unauthorized')
+      end
+    end
+
+    context 'user is logged in' do
+      before { login_as(user) }
+
+      it 'deletes favorite image' do
+        expect(user.favorites.size).to eq(1)
+
+        delete :destroy, params: { id: favorite.id }
+
+        expect(user.favorites.reload.size).to eq(0)
+
+        parsed_response = JSON.parse(response.body)
+        expect(parsed_response['success']).to be_truthy
+      end
+    end
+  end
 end

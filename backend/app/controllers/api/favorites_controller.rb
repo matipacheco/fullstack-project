@@ -44,9 +44,9 @@ module Api
 
     # Removes an image from favorites.
     # Params:
-    # - favorite_id: Favorite image ID.
+    # - id: Favorite image ID.
     def destroy
-      @favorite = Favorite.find(favorite_id)
+      @favorite = Favorite.find(favorite_id['id'])
     
       if @favorite.destroy
         render json: {
@@ -77,7 +77,7 @@ module Api
     # Strong parameters validation for safety.
     # Params: -
     def favorite_id
-      params.permit(:favorite_id)
+      params.permit(:id)
     end
   end
 end
