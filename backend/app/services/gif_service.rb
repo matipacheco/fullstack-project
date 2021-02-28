@@ -17,5 +17,15 @@ module Giphy
 
       response['data']
     end
+    
+    # Returns the information of a particular gif.
+    # Params:
+    # - gif_id: Giphy's ID of the gif.
+    def self.get_gif(gif_id)
+      response = get(BASE_URL + gif_id.to_s, { query: { api_key: AppCredentials[:shared][:giphy][:api_key] } })
+      return nil if response.code != 200
+
+      response['data']
+    end
   end
 end
