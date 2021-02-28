@@ -24,4 +24,16 @@ module SessionsHelper
   def logout
     session.clear
   end
+
+  # Controller's before_action callback. Checks is a user is logged in.
+  # Params: -
+  def require_login
+    return true if logged_in?
+
+    render json: {
+      status: 401,
+      errors: 'Unauthorized'
+    }
+  end
+
 end
