@@ -49,6 +49,32 @@ export const login = (userData, successCallback, errorCallback) => {
     });
 };
 
+/**
+ * Creates user through the API.
+ *
+ * @param {object} userData ({ user: { username: '', password: '', , password_confirmation: '' } })
+ * @param {function} successCallback
+ * @param {function} errorCallback
+ * @public
+ */
+
+export const signup = (userData, successCallback, errorCallback) => {
+  axios
+    .post('http://127.0.0.1:3010/api/users', {
+      user: {
+        username: userData.username,
+        password: userData.password,
+        password_confirmation: userData.password_confirmation,
+      },
+    })
+    .then((response) => {
+      successCallback(response.data);
+    })
+    .catch((error) => {
+      errorCallback(error);
+    });
+};
+
 // TODO: list all favorites endpoint
 // const setAsFavorite = (userId, successCallback, errorCallback) => {
 //   axios
