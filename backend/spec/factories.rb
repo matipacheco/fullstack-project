@@ -8,4 +8,14 @@ FactoryBot.define do
     type { 'gif' }
     url { 'gif_url' }
   end
+
+  factory :user, class: User do
+    username { 'Cool guy' }
+    password_digest { 'megasecretpassword' }
+  end
+
+  factory :favorite, class: Favorite do
+    user
+    image_id { 'gif_id' }
+  end
 end
