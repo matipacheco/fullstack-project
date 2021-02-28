@@ -7,7 +7,7 @@ module Api
     # - user: Hash that comes inside the params. It containes username, password, and password_confirmation.
     def create
       @user = User.new(user_params)
-    
+
       if @user.save
         login
         render json: {

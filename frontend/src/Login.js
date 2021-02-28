@@ -13,8 +13,8 @@ import _ from 'lodash';
  */
 
 export default function Login() {
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [showError, setShowError] = useState(false);
   const [submitEnabled, setSubmitEnabled] = useState(false);
   const [user, setUser] = useState({ username: '', password: '' });
 
@@ -27,11 +27,11 @@ export default function Login() {
   const doLogin = () => {
     setLoading(true);
 
-    if (showError) {
-      setShowError(false);
+    if (!_.isEmpty(error)) {
+      setError('');
     }
 
-    login(user, handleResponse, handleError);
+    login(user, handleResponse);
   };
 
   const handleResponse = (response) => {
@@ -41,13 +41,8 @@ export default function Login() {
       appContext.updateUser(response.user);
 
     } else {
-      setShowError(true);
+      setError(response.errors[0]);
     }
-  };
-
-  const handleError = () => {
-    setLoading(false);
-    setShowError(true);
   };
 
   const handleOnClick = (event) => {
@@ -100,9 +95,9 @@ export default function Login() {
               onChange={handleOnChange}
               onKeyUp={handleOnKeyUp}
             />
-          </Form.Group>
 
-          {showError && <p className="red">Incorrect username or password. Please try again.</p>}
+            {error && <Form.Text className="red">{error}</Form.Text>}
+          </Form.Group>
 
           <div className={`btn btn-primary ${submitEnabled ? '' : 'disabled'}`} onClick={handleOnClick}>
             {loading ? <Spinner as="span" animation="border" variant="light" size="sm" role="status" /> : 'Login'}
