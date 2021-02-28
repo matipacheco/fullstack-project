@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Button, Form, Spinner } from 'react-bootstrap';
+import { Spinner, Button } from 'react-bootstrap';
 
 import { AppContext } from './context/Context';
 
@@ -13,6 +13,11 @@ export default function Search() {
 
   const handleSearch = () => {
     setLoading(true);
+
+    if (appContext.images.length > 0) {
+      appContext.updateImages([]);
+    }
+
     search(searchTerm, handleSuccess, handleError);
   };
 
@@ -46,19 +51,17 @@ export default function Search() {
 
   return (
     <div id="search">
-      <Form inline>
-        <input
-          type="text"
-          className="form-control mr-sm-2"
-          placeholder="What are you looking for?"
-          onKeyUp={handleOnKeyUp}
-          onChange={handleOnChange}
-        />
+      <input
+        type="text"
+        className="form-control mr-sm-2"
+        placeholder="What are you looking for?"
+        onKeyUp={handleOnKeyUp}
+        onChange={handleOnChange}
+      />
 
-        <Button variant="outline-info" onClick={handleOnClick}>
-          {loading ? <Spinner animation="border" variant="primary" size="sm" /> : 'Search'}
-        </Button>
-      </Form>
+      <Button className="btn btn-info" onClick={handleOnClick} disabled={loading}>
+        {loading ? <Spinner as="span" animation="border" variant="light" size="sm" role="status" /> : 'Search'}
+      </Button>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import NavBar from './NavBar';
 import Search from './Search';
 import ImagesWrapper from './ImagesWrapper';
 import ProviderWrapper from './context/ContextProvider';
-import './App.css'
+import './App.scss'
 
 function App() {
   return (

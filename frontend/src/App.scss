@@ -1,0 +1,34 @@
+#search {
+  max-width: 25rem;
+  margin: 2rem auto 1rem;
+  display: flex;
+
+  .btn {
+    width: 20%;
+  }
+}
+
+#cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 1rem 0;
+
+  .card {
+    padding: 1rem;
+    width: 20%;
+  }
+
+  .card-body {
+    position: relative;
+
+    .card-title {
+      margin: 0 0 2rem;
+    }
+
+    button {
+      position: absolute;
+      bottom: 5px;
+    }
+  } 
+}

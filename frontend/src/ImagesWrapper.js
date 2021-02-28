@@ -7,7 +7,7 @@ export default function ImagesWrapper() {
   const appContext = useContext(AppContext);
 
   return (
-    <div>
+    <div id="cards-wrapper" className="container">
       {appContext.images.map((image) => {
         return <Image key={image.id} {...image} />
       })}
