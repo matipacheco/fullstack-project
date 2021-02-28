@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AppContext } from './context/Context';
 import { search } from './utils/requests';
 import { Spinner, Button } from 'react-bootstrap';
+import _ from 'lodash';
 
 /**
  * @function Search
@@ -18,7 +19,7 @@ export default function Search() {
   const handleSearch = () => {
     setLoading(true);
 
-    if (appContext.images.length > 0) {
+    if (!_.isEmpty(appContext.images)) {
       appContext.updateImages([]);
     }
 
@@ -26,12 +27,22 @@ export default function Search() {
   };
 
   const handleSuccess = (response) => {
+    if (appContext.error) {
+      appContext.updateError(false);
+    }
+
     appContext.updateImages(response);
     setLoading(false);
   };
 
   const handleError = () => {
     setLoading(false);
+
+    if (!_.isEmpty(appContext.images)) {
+      appContext.updateImages([]);
+    }
+
+    appContext.updateError(true);
   };
 
   const handleOnChange = (event) => {
