@@ -13,7 +13,7 @@ module Api
       if (response = Giphy::GifService.get_gifs(@favorite_ids))
         render json: {
           success: true,
-          data: response
+          favorites: response
         }
       else
         render json: { 
@@ -46,7 +46,7 @@ module Api
     # Params:
     # - id: Favorite image ID.
     def destroy
-      @favorite = Favorite.find(favorite_id['id'])
+      @favorite = Favorite.find(favorite_id)
     
       if @favorite.destroy
         render json: {
@@ -65,7 +65,7 @@ module Api
     # Strong parameters validation for safety.
     # Params: -
     def user_id
-      params.permit(:user_id)
+      params.permit(:user_id)['user_id']
     end
 
     # Strong parameters validation for safety.
@@ -77,7 +77,7 @@ module Api
     # Strong parameters validation for safety.
     # Params: -
     def favorite_id
-      params.permit(:id)
+      params.permit(:id)['id']
     end
   end
 end
