@@ -11,7 +11,7 @@ import axios from 'axios';
 
 export const search = (searchTerm, successCallback, errorCallback) => {
   axios
-    .get('http://127.0.0.1:3010/api/images/search', {
+    .get('http://localhost:3010/api/images/search', {
       params: {
         q: searchTerm,
       },
@@ -35,7 +35,7 @@ export const search = (searchTerm, successCallback, errorCallback) => {
 
 export const login = (userData, successCallback, errorCallback) => {
   axios
-    .post('http://127.0.0.1:3010/api/login', {
+    .post('http://localhost:3010/api/login', {
       user: {
         username: userData.username,
         password: userData.password
@@ -43,6 +43,25 @@ export const login = (userData, successCallback, errorCallback) => {
     })
     .then((response) => {
       successCallback(response.data);
+    })
+    .catch((error) => {
+      errorCallback(error);
+    });
+};
+
+/**
+ * Logs user out from the API.
+ *
+ * @param {function} successCallback
+ * @param {function} errorCallback
+ * @public
+ */
+
+export const logout = (successCallback, errorCallback) => {
+  axios
+    .post('http://localhost:3010/api/logout', {})
+    .then(() => {
+      successCallback();
     })
     .catch((error) => {
       errorCallback(error);
@@ -60,7 +79,7 @@ export const login = (userData, successCallback, errorCallback) => {
 
 export const signup = (userData, successCallback, errorCallback) => {
   axios
-    .post('http://127.0.0.1:3010/api/users', {
+    .post('http://localhost:3010/api/users', {
       user: {
         username: userData.username,
         password: userData.password,
@@ -75,23 +94,35 @@ export const signup = (userData, successCallback, errorCallback) => {
     });
 };
 
+/**
+ * Allows user to add an image to its favorites, using the API.
+ *
+ * @param {string} gidId
+ * @param {function} successCallback
+ * @param {function} errorCallback
+ * @public
+ */
+
+export const addToFavorites = (gifId, successCallback, errorCallback) => {
+  axios
+    .post('http://localhost:3010/api/favorites', {
+      image_id: gifId,
+    },
+    { withCredentials: true })
+    .then((response) => {
+      successCallback(response.data);
+    })
+    .catch((error) => {
+      errorCallback(error);
+    });
+};
+
 // TODO: list all favorites endpoint
 // const setAsFavorite = (userId, successCallback, errorCallback) => {
 //   axios
-//     .get('http://127.0.0.1:3010/api/favorites', {
+//     .get('http://localhost:3010/api/favorites', {
 //       params: {
 //         user_id: userId,
-//       },
-//     })
-//     ...
-// };
-
-// TODO: set as favorite endpoint
-// const setAsFavorite = (gifId, successCallback, errorCallback) => {
-//   axios
-//     .post('http://127.0.0.1:3010/api/favorites', {
-//       params: {
-//         gif_id: gifId,
 //       },
 //     })
 //     ...

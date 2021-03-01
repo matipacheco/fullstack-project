@@ -2,6 +2,8 @@ import React, { useContext, Fragment } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from './context/Context';
+
+import Logout from './Logout';
 import _ from 'lodash';
 
 /**
@@ -11,17 +13,11 @@ import _ from 'lodash';
 
 export default function NavBar() {
   let history = useHistory();
-
   const appContext = useContext(AppContext);
 
   const redirectTo = (route) => {
     history.push(route);
   };
-
-  const logout = () => {
-    appContext.updateUser({});
-    return redirectTo('/');
-  }
 
   return (
     <Navbar bg="dark" variant="dark">
@@ -48,9 +44,7 @@ export default function NavBar() {
           <Fragment>
             <h3>{appContext.user.username}</h3>
 
-            <div className="btn btn-info" onClick={logout}>
-              Logout
-            </div>
+            <Logout />
           </Fragment>
         )}
 
