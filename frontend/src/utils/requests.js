@@ -108,7 +108,8 @@ export const addToFavorites = (gifId, successCallback, errorCallback) => {
     .post('http://localhost:3010/api/favorites', {
       image_id: gifId,
     },
-    { withCredentials: true })
+    { withCredentials: true },
+    )
     .then((response) => {
       successCallback(response.data);
     })
