@@ -74,7 +74,7 @@ export default function Search() {
       />
 
       <Button className="btn btn-info" onClick={handleOnClick} disabled={loading}>
-        {loading ? <Spinner as="span" animation="border" variant="light" size="sm" role="status" /> : 'Search'}
+        {loading ? <Spinner as="span" animation="border" variant="light" size="sm" role="status" /> : 'Search 🔎'}
       </Button>
     </div>
   );

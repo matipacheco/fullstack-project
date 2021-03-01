@@ -22,11 +22,13 @@ export default function NavBar() {
   return (
     <Navbar bg="dark" variant="dark">
       <div className="navbar-brand" onClick={() => redirectTo('/')}>
-        GIFs as a Service
+        EverlyGIFs
       </div>
 
       <Nav className="mr-auto">
-        <Nav.Link href="#favorites">Favorites</Nav.Link>
+        {!_.isEmpty(appContext.user) && (
+          <Nav.Link href="#favorites">Favorites ⭐</Nav.Link>
+        )}
       </Nav>
 
       <div className="button-group">
@@ -47,7 +49,6 @@ export default function NavBar() {
             <Logout />
           </Fragment>
         )}
-
       </div>
     </Navbar>
   );

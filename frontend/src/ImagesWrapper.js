@@ -29,8 +29,9 @@ export default function ImagesWrapper() {
 function EmptyView() {
   return (
     <div className="empty">
-      <h3>Looking for a cool GIF?</h3>
-      <p>Search something!</p>
+      <h3>EverlyGIFs</h3>
+      <p>Your favorite GIF search engine</p>
+      <img src="https://media.giphy.com/media/VekcnHOwOI5So/source.gif"/>
     </div>
   );
 }
@@ -40,6 +41,7 @@ function ErrorView() {
     <div className="empty">
       <h3>An error has occured</h3>
       <p>Try again later</p>
+      <img src="https://media.giphy.com/media/QMHoU66sBXqqLqYvGO/giphy.gif"/>
     </div>
   );
 }
