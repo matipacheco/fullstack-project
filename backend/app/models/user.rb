@@ -14,7 +14,7 @@ class User < ApplicationRecord
   def formatted_errors
     hash = {}
     errors.each do |attribute, message|
-      hash[attribute] = "#{attribute.to_s.capitalize} #{message}"
+      hash[attribute] = ["#{attribute.to_s.capitalize} #{message}"]
     end
 
     hash

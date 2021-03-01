@@ -31,7 +31,7 @@ export default function Signup() {
       setErrors(false);
     }
 
-    signup(user, handleResponse);
+    signup(user, handleResponse, handleError);
   };
 
   const handleResponse = (response) => {
@@ -42,6 +42,12 @@ export default function Signup() {
     } else {
       setErrors(response.errors);
     }
+  };
+
+  const handleError = () => {
+    setLoading(false);
+
+    appContext.updateError(true);
   };
 
   const handleOnClick = (event) => {
@@ -80,7 +86,7 @@ export default function Signup() {
               onKeyUp={handleOnKeyUp}
             />
 
-            {errors.username && <Form.Text className="red">{errors.username}</Form.Text>}
+            {errors.username && <Form.Text className="red">{errors.username[0]}</Form.Text>}
           </Form.Group>
 
           <Form.Group>
@@ -93,7 +99,7 @@ export default function Signup() {
               onKeyUp={handleOnKeyUp}
             />
 
-            {errors.password && <Form.Text className="red">{errors.password}</Form.Text>}
+            {errors.password && <Form.Text className="red">{errors.password[0]}</Form.Text>}
           </Form.Group>
 
           <Form.Group>

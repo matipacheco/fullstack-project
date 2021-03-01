@@ -31,7 +31,7 @@ export default function Login() {
       setError('');
     }
 
-    login(user, handleResponse);
+    login(user, handleResponse, handleError);
   };
 
   const handleResponse = (response) => {
@@ -39,10 +39,15 @@ export default function Login() {
 
     if (response.logged_in) {
       appContext.updateUser(response.user);
-
     } else {
       setError(response.errors[0]);
     }
+  };
+
+  const handleError = () => {
+    setLoading(false);
+
+    appContext.updateError(true);
   };
 
   const handleOnClick = (event) => {
@@ -67,11 +72,7 @@ export default function Login() {
 
   return (
     <div className="credentials-form">
-      {
-        !_.isEmpty(appContext.user) && (
-          <Redirect to="/" />
-        )
-      }
+      {!_.isEmpty(appContext.user) && <Redirect to="/" />}
 
       <Container>
         <Form>
