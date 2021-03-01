@@ -45,7 +45,7 @@ describe Api::FavoritesController do
   describe 'POST create' do
     context 'user is not logged in' do
       it 'returns error' do
-        post :create, params: { favorite: { user_id: user.id, image_id: 'ID' } }
+        post :create, params: { image_id: 'ID' }
 
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['status']).to eq(401)
@@ -59,7 +59,7 @@ describe Api::FavoritesController do
       it 'sets an image as favorite' do
         expect(user.favorites.size).to eq(0)
 
-        post :create, params: { favorite: { user_id: user.id, image_id: 'ID' } }
+        post :create, params: { image_id: 'ID' }
 
         expect(user.favorites.reload.size).to eq(1)
 

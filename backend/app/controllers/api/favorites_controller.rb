@@ -8,7 +8,7 @@ module Api
     # Params:
     # - user_id: User's ID.
     def index
-      @favorite_ids = Favorite.where(user_id: user_id).pluck(:image_id)
+      @favorite_ids = Favorite.where(user: current_user).pluck(:image_id)
     
       if (response = Giphy::GifService.get_gifs(@favorite_ids))
         render json: {
@@ -27,7 +27,7 @@ module Api
     # Params:
     # - favorite: Hash that comes inside the params. It containes user_id and image_id.
     def create
-      @favorite = Favorite.new(favorite_params)
+      @favorite = current_user.favorites.new(image_id)
     
       if @favorite.save
         render json: {
@@ -64,14 +64,8 @@ module Api
 
     # Strong parameters validation for safety.
     # Params: -
-    def user_id
-      params.permit(:user_id)['user_id']
-    end
-
-    # Strong parameters validation for safety.
-    # Params: -
-    def favorite_params
-      params.require(:favorite).permit(:user_id, :image_id)
+    def image_id
+      params.permit(:image_id)
     end
 
     # Strong parameters validation for safety.

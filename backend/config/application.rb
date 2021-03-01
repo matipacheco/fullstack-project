@@ -18,13 +18,7 @@ module Backend
 
     require './app/services/gif_service'
 
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins '*'
-        resource '*', headers: :any, methods: :any
-      end
-    end
-
+    config.api_only = false
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
   end
