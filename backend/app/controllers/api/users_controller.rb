@@ -17,7 +17,7 @@ module Api
       else
         render json: { 
           status: 500,
-          errors: @user.errors.messages
+          errors: @user.formatted_errors
         }
       end
     end
