@@ -11,7 +11,7 @@ FactoryBot.define do
 
   factory :user, class: User do
     username { 'Cool guy' }
-    password_digest { 'megasecretpassword' }
+    password { 'megasecretpassword' }
   end
 
   factory :favorite, class: Favorite do
