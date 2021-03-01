@@ -80,7 +80,7 @@ export default function Signup() {
               onKeyUp={handleOnKeyUp}
             />
 
-            {errors.username && <Form.Text className="red">{errors.username[0]}</Form.Text>}
+            {errors.username && <Form.Text className="red">{errors.username}</Form.Text>}
           </Form.Group>
 
           <Form.Group>
@@ -93,7 +93,7 @@ export default function Signup() {
               onKeyUp={handleOnKeyUp}
             />
 
-            {errors.password && <Form.Text className="red">{errors.password[0]}</Form.Text>}
+            {errors.password && <Form.Text className="red">{errors.password}</Form.Text>}
           </Form.Group>
 
           <Form.Group>
