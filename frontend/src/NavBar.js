@@ -27,7 +27,7 @@ export default function NavBar() {
 
       <Nav className="mr-auto">
         {!_.isEmpty(appContext.user) && (
-          <Nav.Link href="#favorites">Favorites ⭐</Nav.Link>
+          <Nav.Link href="#favorites">Favorites <span role="img" aria-label="heart">❤️</span></Nav.Link>
         )}
       </Nav>
 

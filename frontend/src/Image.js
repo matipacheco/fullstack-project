@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { Card, Button, Spinner } from 'react-bootstrap';
+import React, { useContext } from 'react';
 import { AppContext } from './context/Context';
 import { addToFavorites } from './utils/requests';
 
@@ -9,24 +8,17 @@ import { addToFavorites } from './utils/requests';
  */
 
 export default function Image(props) {
-  const [loading, setLoading] = useState(false);
-
   const appContext = useContext(AppContext);
 
   const setAsFavorite = () => {
-    setLoading(true);
-
     addToFavorites(props.id, handleResponse, handleError);
   };
 
   const handleResponse = () => {
-    setLoading(false);
     // Display toast!
   };
 
   const handleError = () => {
-    setLoading(false);
-
     appContext.updateError(true);
   };
 
@@ -36,14 +28,9 @@ export default function Image(props) {
   };
 
   return (
-    <Card>
-      <Card.Img variant="top" src={props.url} />
-      <Card.Body>
-        <Card.Title>{props.title}</Card.Title>
-        <Button variant="info" onClick={handleOnClick}>
-          {loading ? <Spinner as="span" animation="border" variant="light" size="sm" role="status" /> : 'Add to favorites'}
-        </Button>
-      </Card.Body>
-    </Card>
+    <figure>
+      <img src={props.url} alt={props.title} />
+      <figcaption><span title="Add to favorites" role="img" aria-label="heart" onClick={handleOnClick}>❤️</span></figcaption>
+    </figure>
   );
 }

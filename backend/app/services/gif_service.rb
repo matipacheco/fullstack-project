@@ -11,7 +11,7 @@ module Giphy
     # Params:
     # - q: The search term.
     # - limit: The maximum number of elements to be fetched.
-    def self.search(q, limit = 10)
+    def self.search(q, limit = 20)
       response = get(BASE_URL + '/search', {
                        query: {
                          q: q,

@@ -14,16 +14,17 @@ import _ from 'lodash';
 export default function Search() {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [emptySearchError, setEmptySearchError] = useState(false);
 
   const appContext = useContext(AppContext);
 
   const handleSearch = () => {
-    setLoading(true);
-
-    if (!_.isEmpty(appContext.images)) {
-      appContext.updateImages([]);
+    if (_.isEmpty(searchTerm)) {
+      return setEmptySearchError(true);
     }
 
+    setLoading(true);
+    setEmptySearchError(false)
     search(searchTerm, handleSuccess, handleError);
   };
 
@@ -76,6 +77,12 @@ export default function Search() {
       <Button className="btn btn-info" onClick={handleOnClick} disabled={loading}>
         {loading ? <Spinner as="span" animation="border" variant="light" size="sm" role="status" /> : 'Search 🔎'}
       </Button>
+
+      {
+        emptySearchError && (
+          <small className="red">Type something out</small>
+        )
+      }
     </div>
   );
 }
