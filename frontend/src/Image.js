@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AppContext } from './context/Context';
 import { addToFavorites } from './utils/requests';
 
@@ -8,6 +8,7 @@ import { addToFavorites } from './utils/requests';
  */
 
 export default function Image(props) {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const appContext = useContext(AppContext);
 
   const setAsFavorite = () => {
@@ -29,8 +30,8 @@ export default function Image(props) {
 
   return (
     <figure>
-      <img src={props.url} alt={props.title} />
-      {!props.favorite && (
+      <img src={props.url} alt={props.title} onLoad={() => setImageLoaded(true)} />
+      {!props.favorite && imageLoaded && (
         <figcaption>
           <span title="Add to favorites" role="img" aria-label="heart" onClick={handleOnClick}>
             ❤️
