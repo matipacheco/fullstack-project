@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { AppContext } from './context/Context';
 import Search from './Search';
-import { ErrorView, EmptySearchView } from './commons';
+import { EmptySearchView } from './utils/commons';
 import ImagesWrapper from './ImagesWrapper';
 import './App.scss';
 import _ from 'lodash';
@@ -19,7 +19,7 @@ function App() {
       <Search />
       <ImagesWrapper />
 
-      {appContext.error ? <ErrorView /> : _.isEmpty(appContext.images) ? <EmptySearchView /> : void 0}
+      {_.isEmpty(appContext.images) && <EmptySearchView />}
     </div>
   );
 }

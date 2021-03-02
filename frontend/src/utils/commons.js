@@ -1,5 +1,6 @@
-import React from 'react';
-import { Spinner } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Spinner, Modal, Button } from 'react-bootstrap';
+import { AppContext } from './../context/Context';
 
 /**
  * @function EmptySearchView
@@ -46,18 +47,30 @@ function FavoritesLoader() {
 }
 
 /**
- * @function ErrorView
+ * @function NetworkErrorView
  * Component displayed when a network error ocurrs.
  */
 
-function ErrorView() {
+function NetworkErrorView() {
+  const appContext = useContext(AppContext);
+
+  const handleClose = () => {
+    appContext.updateError(false);
+  };
+
   return (
-    <div className="empty">
-      <h3>An error has occured</h3>
-      <p>Try again later</p>
-      <img src="https://media.giphy.com/media/VekcnHOwOI5So/source.gif" alt="Error view" />
-    </div>
-  );
+    <Modal show={appContext.error} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Network Error</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>We were to communicate with our services</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  )
 }
 
-export { EmptySearchView, ErrorView, EmptyFavoritesView, FavoritesLoader };
+export { EmptySearchView, NetworkErrorView, EmptyFavoritesView, FavoritesLoader };
