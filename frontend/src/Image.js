@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from './context/Context';
 import { addToFavorites } from './utils/requests';
+import { toast } from 'react-toastify';
 
 /**
  * @function Image
@@ -9,14 +10,29 @@ import { addToFavorites } from './utils/requests';
 
 export default function Image(props) {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [favoriteId, setFavoriteId] = useState(null);
   const appContext = useContext(AppContext);
+
+  const toastConfig = {
+    position: "top-right",
+    autoClose: 4000,
+    draggable: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    hideProgressBar: false,
+  };
 
   const setAsFavorite = () => {
     addToFavorites(props.id, handleResponse, handleError);
   };
 
-  const handleResponse = () => {
-    // Display toast!
+  const handleResponse = (response) => {
+    if (response.errors) {
+      return toast.error('Could not set GIF as favorite 😞', toastConfig);
+    }
+    
+    toast.success('GIF added to your favorites! 🤘🏾', toastConfig);
+    setFavoriteId(response.favorite.id);
   };
 
   const handleError = () => {

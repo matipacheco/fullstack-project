@@ -7,6 +7,7 @@ import Login from './Login';
 import ProviderWrapper from './context/ContextProvider';
 import Favorites from './Favorites';
 import { NetworkErrorView } from './utils/commons';
+import { ToastContainer } from 'react-toastify';
 
 /**
  * @function RoutedApp
@@ -19,6 +20,7 @@ export default function RoutedApp() {
   return (
     <Router history={history}>
       <ProviderWrapper>
+        <ToastContainer />
         <NavBar />
 
         <NetworkErrorView />
