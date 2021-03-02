@@ -65,7 +65,7 @@ module Api
     # Strong parameters validation for safety.
     # Params: -
     def image_id
-      params.require(:favorite).permit(:image_id)
+      params.permit(:image_id)
     end
 
     # Strong parameters validation for safety.

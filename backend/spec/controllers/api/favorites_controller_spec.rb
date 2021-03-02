@@ -67,6 +67,18 @@ describe Api::FavoritesController do
         expect(parsed_response['success']).to be_truthy
         expect(parsed_response['favorite']).to be_any
       end
+
+      context 'when favorite with image ID already exists' do
+        let!(:favorite) { create(:favorite, user: user, image_id: 'SomeID') }
+
+        it 'sets an image as favorite' do
+          post :create, params: { image_id: 'SomeID' }
+
+          parsed_response = JSON.parse(response.body)
+          expect(parsed_response['success']).to be_falsey
+          expect(parsed_response['errors']).to be_any
+        end
+      end
     end
   end
 
