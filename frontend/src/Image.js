@@ -30,7 +30,13 @@ export default function Image(props) {
   return (
     <figure>
       <img src={props.url} alt={props.title} />
-      <figcaption><span title="Add to favorites" role="img" aria-label="heart" onClick={handleOnClick}>❤️</span></figcaption>
+      {!props.favorite && (
+        <figcaption>
+          <span title="Add to favorites" role="img" aria-label="heart" onClick={handleOnClick}>
+            ❤️
+          </span>
+        </figcaption>
+      )}
     </figure>
   );
 }

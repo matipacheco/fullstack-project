@@ -108,8 +108,9 @@ export const addToFavorites = (gifId, successCallback, errorCallback) => {
     .post('http://localhost:3010/api/favorites', {
       image_id: gifId,
     },
-    { withCredentials: true },
-    )
+    {
+      withCredentials: true
+    })
     .then((response) => {
       successCallback(response.data);
     })
@@ -118,13 +119,21 @@ export const addToFavorites = (gifId, successCallback, errorCallback) => {
     });
 };
 
-// TODO: list all favorites endpoint
-// const setAsFavorite = (userId, successCallback, errorCallback) => {
-//   axios
-//     .get('http://localhost:3010/api/favorites', {
-//       params: {
-//         user_id: userId,
-//       },
-//     })
-//     ...
-// };
+/**
+ * Lists logged user favorite images.
+ *
+ * @param {function} successCallback
+ * @param {function} errorCallback
+ * @public
+ */
+
+export const listFavorites = (successCallback, errorCallback) => {
+  axios
+    .get('http://localhost:3010/api/favorites')
+    .then((response) => {
+      successCallback(response.data);
+    })
+    .catch((error) => {
+      errorCallback(error);
+    });
+};

@@ -81,14 +81,18 @@ nav {
 .credentials-form {
   height: 100vh;
   position: relative;
+}
 
-  .container {
-    max-width: 35%;
+.centered {
+  max-width: 35%;
 
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  img {
+    width: 100%;
   }
 }
 

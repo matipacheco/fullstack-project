@@ -74,7 +74,7 @@ export default function Signup() {
     <div className="credentials-form">
       {!_.isEmpty(appContext.user) && <Redirect to="/" />}
 
-      <Container>
+      <Container className="centered">
         <Form>
           <Form.Group>
             <Form.Label>Username</Form.Label>

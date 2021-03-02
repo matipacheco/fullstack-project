@@ -6,6 +6,7 @@ import Signup from './Signup';
 import NavBar from './NavBar';
 import Login from './Login';
 import ProviderWrapper from './context/ContextProvider';
+import Favorites from './Favorites';
 
 /**
  * @function RoutedApp
@@ -27,6 +28,10 @@ export default function RoutedApp() {
 
           <Route exact path="/login">
             <Login />
+          </Route>
+
+          <Route exact path="/favorites">
+            <Favorites />
           </Route>
 
           <Route path="/">
