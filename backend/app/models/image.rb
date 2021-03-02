@@ -4,24 +4,22 @@
 # When fetching video data through Giphy's API, responses are deserialized and transformed into instances of this class.
 class Image
   include ActiveModel::Model
-  include ActiveModel::Callbacks
 
   attr_accessor :id, :title, :images, :url
 
   def initialize(attributes = {})
     super
 
-    @url = build_url
+    @url = original_url
   end
   
   # Returns a URL for the image.
-  # Returns as default the *fixed_height_small* URL inside the images array field.
-  # If that field is not found, it returns the URL of the original image in the array.
+  # Returns the URL that sotres the image at its original size.
+  # (Original size needed to show in a better way the images in the frontend app)
   # Params: -
-  def build_url
+  def original_url
     return unless @images
 
-    fixed_height_small = @images['fixed_height_small']
-    fixed_height_small.present? ? fixed_height_small['url'] : @images['original']['url']
+    @images['original']['url']
   end
 end
