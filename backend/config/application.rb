@@ -17,8 +17,5 @@ module Backend
     # the framework and any gems in your application.
 
     require './app/services/gif_service'
-
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore
   end
 end
