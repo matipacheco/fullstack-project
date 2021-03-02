@@ -59,7 +59,7 @@ function NetworkErrorView() {
   };
 
   return (
-    <Modal show={appContext.error} onHide={handleClose}>
+    <Modal show={appContext.error} onHide={handleClose} animation={false}>
       <Modal.Header closeButton>
         <Modal.Title>Network Error</Modal.Title>
       </Modal.Header>

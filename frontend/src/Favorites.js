@@ -19,18 +19,18 @@ export default function Favorites() {
   const appContext = useContext(AppContext);
 
   useEffect(() => {
+    const handleSuccess = (response) => {
+      setLoading(false);
+      setFavorites(response.favorites);
+    };
+
+    const handleError = () => {
+      history.push('/');
+      appContext.updateError(true);
+    };
+
     listFavorites(handleSuccess, handleError);
-  }, []);
-
-  const handleSuccess = (response) => {
-    setLoading(false);
-    setFavorites(response.favorites);
-  };
-
-  const handleError = () => {
-    history.push('/');
-    appContext.updateError(true);
-  };
+  }, [history, appContext]);
 
   return (
     <Fragment>
