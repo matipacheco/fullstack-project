@@ -8,7 +8,7 @@ module Api
     # Params:
     # - user_id: User's ID.
     def index
-      @favorite_ids = Favorite.where(user: current_user).pluck(:image_id)
+      @favorite_ids = current_user.favorites.pluck(:image_id)
     
       if (response = Giphy::GifService.get_gifs(@favorite_ids))
         render json: {
