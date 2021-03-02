@@ -18,7 +18,7 @@ module Api
       else
         render json: { 
           status: 500,
-          errors: @favorite.errors.messages
+          errors: ["Unable to fetch data"]
         }
       end
     end
