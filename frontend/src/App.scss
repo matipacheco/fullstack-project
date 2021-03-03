@@ -47,6 +47,10 @@ nav {
     grid-template-rows: 1fr auto;
     margin-bottom: 10px;
     break-inside: avoid;
+
+    .image-disabled {
+      pointer-events: none;
+    }
   }
   
   figure > img {

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { AppContext } from './context/Context';
 import { addToFavorites } from './utils/requests';
 import { toast } from 'react-toastify';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { OverlayTrigger, Popover, Spinner } from 'react-bootstrap';
 
 /**
  * @function Image
@@ -47,19 +47,27 @@ export default function Image(props) {
   return (
     <figure>
       <img src={props.url} alt={props.title} onLoad={() => setImageLoaded(true)} />
-      {!props.favorite && imageLoaded && (
-        <figcaption onClick={handleOnClick}>
-          <OverlayTrigger
-            placement="right"
-            delay={{ show: 50, hide: 50 }}
-            overlay={<Popover id="add-favorite">Add to favorites</Popover>}
-          >
-            <span role="img" aria-label="heart">
-              ❤️
-            </span>
-          </OverlayTrigger>
-        </figcaption>
-      )}
+      {!props.favorite && <AddToFavorites imageLoaded={imageLoaded} handleOnClick={handleOnClick} />}
     </figure>
+  );
+}
+
+function AddToFavorites(props) {
+  return (
+    <figcaption className={!props.imageLoaded ? 'image-disabled' : ''} onClick={props.handleOnClick}>
+      {props.imageLoaded ? (
+        <OverlayTrigger
+          placement="right"
+          delay={{ show: 50, hide: 50 }}
+          overlay={<Popover id="add-favorite">Add to favorites</Popover>}
+        >
+          <span role="img" aria-label="heart">
+            ❤️
+          </span>
+        </OverlayTrigger>
+      ) : (
+        <Spinner as="span" animation="border" variant="dark" size="sm" role="status" />
+      )}
+    </figcaption>
   );
 }
