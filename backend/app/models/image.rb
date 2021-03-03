@@ -20,6 +20,6 @@ class Image
   def original_url
     return unless @images
 
-    @images['original']['url']
+    @images['fixed_height']['url']
   end
 end
