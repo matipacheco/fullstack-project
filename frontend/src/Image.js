@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 
 export default function Image(props) {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [favoriteId, setFavoriteId] = useState(null);
+
   const appContext = useContext(AppContext);
 
   const toastConfig = {
@@ -32,7 +32,6 @@ export default function Image(props) {
     }
     
     toast.success('GIF added to your favorites! 🤘🏾', toastConfig);
-    setFavoriteId(response.favorite.id);
   };
 
   const handleError = () => {

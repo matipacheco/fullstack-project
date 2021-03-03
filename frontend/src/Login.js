@@ -13,12 +13,12 @@ import _ from 'lodash';
  */
 
 export default function Login() {
+  const appContext = useContext(AppContext);
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [submitEnabled, setSubmitEnabled] = useState(false);
   const [user, setUser] = useState({ username: '', password: '' });
-
-  const appContext = useContext(AppContext);
 
   useEffect(() => {
     setSubmitEnabled(!_.isEmpty(user.username) && !_.isEmpty(user.password));
@@ -38,7 +38,10 @@ export default function Login() {
     setLoading(false);
 
     if (response.logged_in) {
-      appContext.updateUser(response.user);
+      const user = response.user;
+
+      appContext.updateUser(user);
+      localStorage.setItem('user', JSON.stringify(user));
     } else {
       setError(response.errors[0]);
     }

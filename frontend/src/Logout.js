@@ -14,6 +14,7 @@ export default function Logout() {
 
   const successCallback = () => {
     appContext.updateUser({});
+    localStorage.setItem('user', null);
   };
 
   return (

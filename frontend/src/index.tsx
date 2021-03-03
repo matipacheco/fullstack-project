@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
-import RoutedApp from './RoutedApp';
+import AppWrapper from './AppWrapper';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <RoutedApp />
+    <AppWrapper />
   </React.StrictMode>,
   document.getElementById('root')
 );

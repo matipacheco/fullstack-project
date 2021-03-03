@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import { AppContext } from './../context/Context';
 import { Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -54,6 +54,13 @@ function FavoritesLoader() {
 
 function NetworkErrorView() {
   const appContext = useContext(AppContext);
+
+  useEffect(() => {
+    if (appContext.error) {
+      displayToast();
+    }
+  }, [appContext.error])
+
   const displayToast = () => {
     toast.error('We were to communicate with our services', {
       position: 'top-right',
@@ -65,7 +72,7 @@ function NetworkErrorView() {
     });
   };
 
-  return <Fragment>{appContext.error && displayToast()}</Fragment>;
+  return <Fragment/>;
 }
 
 export { EmptySearchView, NetworkErrorView, EmptyFavoritesView, FavoritesLoader };

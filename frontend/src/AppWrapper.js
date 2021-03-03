@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
 import App from './App';
 import Signup from './Signup';
@@ -10,11 +11,11 @@ import { NetworkErrorView } from './utils/commons';
 import { ToastContainer } from 'react-toastify';
 
 /**
- * @function RoutedApp
+ * @function AppWrapper
  * Wrapper. That connects the entire app with the router
  */
 
-export default function RoutedApp() {
+export default function AppWrapper() {
   let history = useHistory();
 
   return (
@@ -44,5 +45,5 @@ export default function RoutedApp() {
         </Switch>
       </ProviderWrapper>
     </Router>
-  )
-};
+  );
+}
