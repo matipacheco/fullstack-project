@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include ErrorHandlingConcern
+
   has_secure_password
 
   validates :username, presence: true
@@ -10,13 +12,4 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6 }
 
   has_many :favorites
-
-  def formatted_errors
-    hash = {}
-    errors.each do |attribute, message|
-      hash[attribute] = ["#{attribute.to_s.capitalize} #{message}"]
-    end
-
-    hash
-  end
 end

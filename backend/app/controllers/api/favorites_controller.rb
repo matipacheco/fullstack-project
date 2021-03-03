@@ -37,7 +37,7 @@ module Api
       else
         render json: { 
           status: 500,
-          errors: @favorite.errors.messages
+          errors: @favorite.errors_for(:image_id)
         }
       end
     end

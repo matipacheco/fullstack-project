@@ -28,7 +28,7 @@ export default function Image(props) {
 
   const handleResponse = (response) => {
     if (response.errors) {
-      return toast.error('Could not set GIF as favorite 😞', toastConfig);
+      return toast.info(response.errors[0], toastConfig);
     }
     
     toast.success('GIF added to your favorites! 🤘🏾', toastConfig);
