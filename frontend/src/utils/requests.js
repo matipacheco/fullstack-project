@@ -26,7 +26,9 @@ export const search = (searchTerm, successCallback, errorCallback) => {
       successCallback(response.data.data);
     })
     .catch((error) => {
-      errorCallback(error);
+      if (errorCallback) {
+        errorCallback(error);
+      }
     });
 };
 
@@ -57,7 +59,9 @@ export const login = (userData, successCallback, errorCallback) => {
       successCallback(response.data);
     })
     .catch((error) => {
-      errorCallback(error);
+      if (errorCallback) {
+        errorCallback(error);
+      }
     });
 };
 
@@ -82,7 +86,9 @@ export const logout = (successCallback, errorCallback) => {
       successCallback();
     })
     .catch((error) => {
-      errorCallback(error);
+      if (errorCallback) {
+        errorCallback(error);
+      }
     });
 };
 
@@ -114,7 +120,35 @@ export const signup = (userData, successCallback, errorCallback) => {
       successCallback(response.data);
     })
     .catch((error) => {
-      errorCallback(error);
+      if (errorCallback) {
+        errorCallback(error);
+      }
+    });
+};
+
+/**
+ * Checks if there's an active session for the current user.
+ *
+ * @param {function} successCallback
+ * @param {function} errorCallback
+ * @public
+ */
+
+export const verifyUserLoggedIn = (successCallback, errorCallback) => {
+  axios
+    .get(
+      'http://localhost:3010/api/check_logged_in',
+      {
+        withCredentials: true,
+      }
+    )
+    .then((response) => {
+      successCallback(response.data);
+    })
+    .catch((error) => {
+      if (errorCallback) {
+        errorCallback(error);
+      }
     });
 };
 
@@ -142,7 +176,9 @@ export const addToFavorites = (gifId, successCallback, errorCallback) => {
       successCallback(response.data);
     })
     .catch((error) => {
-      errorCallback(error);
+      if (errorCallback) {
+        errorCallback(error);
+      }
     });
 };
 
@@ -166,6 +202,8 @@ export const listFavorites = (successCallback, errorCallback) => {
       successCallback(response.data);
     })
     .catch((error) => {
-      errorCallback(error);
+      if (errorCallback) {
+        errorCallback(error);
+      }
     });
 };

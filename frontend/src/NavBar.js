@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext, Fragment } from 'react';
+import React, { useEffect, useContext, Fragment } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from './context/Context';
-
+import { verifyUserLoggedIn } from './utils/requests';
 import Logout from './Logout';
 import _ from 'lodash';
 
@@ -15,18 +15,15 @@ export default function NavBar() {
   let history = useHistory();
   const appContext = useContext(AppContext);
 
-  const [sessionStored, setSessionStored] = useState(false);
-
   useEffect(() => {
-    setSessionStored(!_.isEmpty(localStorage.getItem('user')));
+    verifyUserLoggedIn(handleSuccess);
   }, []);
 
-  useEffect(() => {
-    if (sessionStored) {
-      const loggedUser = JSON.parse(localStorage.getItem('user'));
-      appContext.updateUser(loggedUser);
+  const handleSuccess = (response) => {
+    if (response.logged_in) {
+      appContext.updateUser(response.user);
     }
-  }, [sessionStored]);
+  };
 
   const redirectTo = (route) => {
     history.push(route);

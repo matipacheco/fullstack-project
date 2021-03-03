@@ -31,6 +31,20 @@ module Api
         logged_out: true
       }
     end
+
+    # Verifies if there is an active session for a user.
+    # Params: -
+    def user_logged_in?
+      return render json: {
+        logged_in: true,
+        user: current_user
+      } if logged_in? && current_user
+
+      render json: {
+        logged_in: false,
+        errors: ['No user session active']
+      }
+    end
     
     private
 
