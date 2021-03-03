@@ -18,7 +18,7 @@ export default function NavBar() {
   const [sessionStored, setSessionStored] = useState(false);
 
   useEffect(() => {
-    setSessionStored(!_.isEmpty(localStorage.getItem('user')))
+    setSessionStored(!_.isEmpty(localStorage.getItem('user')));
   }, []);
 
   useEffect(() => {
@@ -41,7 +41,12 @@ export default function NavBar() {
 
       <Nav className="mr-auto">
         {!_.isEmpty(appContext.user) && (
-          <Nav.Link href="favorites">Favorites <span role="img" aria-label="heart">❤️</span></Nav.Link>
+          <Nav.Link onClick={() => redirectTo('/favorites')} className="active">
+            Favorites{' '}
+            <span role="img" aria-label="heart">
+              ❤️
+            </span>
+          </Nav.Link>
         )}
       </Nav>
 

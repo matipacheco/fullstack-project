@@ -29,7 +29,7 @@ export default function Image(props) {
 
   const handleResponse = (response) => {
     if (response.errors) {
-      return toast.info(response.errors[0], toastConfig);
+      return toast.warn(response.errors[0], toastConfig);
     }
 
     toast.success('GIF added to your favorites! 🤘🏾', toastConfig);
@@ -46,7 +46,7 @@ export default function Image(props) {
 
   return (
     <figure>
-      <img src={props.url} onLoad={() => setImageLoaded(true)} />
+      <img src={props.url} alt={props.title} onLoad={() => setImageLoaded(true)} />
       {!props.favorite && imageLoaded && (
         <figcaption onClick={handleOnClick}>
           <OverlayTrigger
