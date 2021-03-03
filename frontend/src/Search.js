@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { AppContext } from './context/Context';
 import { Spinner, Button } from 'react-bootstrap';
 import { search } from './utils/requests';
@@ -12,20 +12,25 @@ import _ from 'lodash';
  */
 
 export default function Search() {
+  const searchBarRef = useRef(null);
+
   const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const [emptySearchError, setEmptySearchError] = useState(false);
 
   const appContext = useContext(AppContext);
 
+  useEffect(() => {
+    searchBarRef.current.focus();
+  }, []);
+
   const handleSearch = () => {
-    if (_.isEmpty(searchTerm)) {
+    if (_.isEmpty(searchBarRef.current.value)) {
       return setEmptySearchError(true);
     }
 
     setLoading(true);
     setEmptySearchError(false)
-    search(searchTerm, handleSuccess, handleError);
+    search(searchBarRef.current.value, handleSuccess, handleError);
   };
 
   const handleSuccess = (response) => {
@@ -47,12 +52,6 @@ export default function Search() {
     appContext.updateError(true);
   };
 
-  const handleOnChange = (event) => {
-    event.preventDefault();
-
-    setSearchTerm(event.target.value);
-  };
-
   const handleOnClick = (event) => {
     event.preventDefault();
     handleSearch();
@@ -68,10 +67,10 @@ export default function Search() {
     <div id="search">
       <input
         type="text"
+        ref={searchBarRef}
         className="form-control mr-sm-2"
-        placeholder="What are you looking for?"
+        placeholder="Find a cool GIF!"
         onKeyUp={handleOnKeyUp}
-        onChange={handleOnChange}
       />
 
       <Button className="btn btn-info" onClick={handleOnClick} disabled={loading}>
