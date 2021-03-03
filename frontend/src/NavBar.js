@@ -30,6 +30,7 @@ export default function NavBar() {
 
   const redirectTo = (route) => {
     history.push(route);
+    appContext.updateImages([]);
   };
 
   return (

@@ -55,7 +55,6 @@ nav {
   figure span {
     color: black;
     text-decoration: none;
-    cursor: pointer;
   }
 
   figcaption {
@@ -64,6 +63,7 @@ nav {
     background-color: rgba(255,255,255,.5);
     padding: .2em .5em;
     justify-self: start;
+    cursor: pointer;
   }
 
   .container {
@@ -71,6 +71,10 @@ nav {
     column-gap: 10px;
     width: 100%;
   }
+}
+
+#add-favorite {
+  padding: .5rem;
 }
 
 .empty {

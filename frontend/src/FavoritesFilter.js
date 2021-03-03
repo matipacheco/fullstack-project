@@ -39,7 +39,9 @@ export default function FavoritesFilter(props) {
       />
 
       <Button className="btn btn-info" onClick={handleOnClick}>
-        🔎
+        <span title="Browser you favorites" role="img" aria-label="magnifier-glass">
+          🔎
+        </span>
       </Button>
     </div>
   );
