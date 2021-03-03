@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
-import { Spinner, Modal, Button } from 'react-bootstrap';
+import React, { Fragment, useContext } from 'react';
 import { AppContext } from './../context/Context';
+import { Spinner } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 /**
  * @function EmptySearchView
@@ -53,24 +54,18 @@ function FavoritesLoader() {
 
 function NetworkErrorView() {
   const appContext = useContext(AppContext);
-
-  const handleClose = () => {
-    appContext.updateError(false);
+  const displayToast = () => {
+    toast.error('We were to communicate with our services', {
+      position: 'top-right',
+      autoClose: 4000,
+      draggable: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      hideProgressBar: false,
+    });
   };
 
-  return (
-    <Modal show={appContext.error} onHide={handleClose} animation={false}>
-      <Modal.Header closeButton>
-        <Modal.Title>Network Error</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>We were to communicate with our services</Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  )
+  return <Fragment>{appContext.error && displayToast()}</Fragment>;
 }
 
 export { EmptySearchView, NetworkErrorView, EmptyFavoritesView, FavoritesLoader };
