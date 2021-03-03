@@ -158,7 +158,6 @@ export const listFavorites = (successCallback, errorCallback) => {
   axios
     .get(
       'http://localhost:3010/api/favorites',
-      {},
       {
         withCredentials: true,
       }

@@ -32,7 +32,7 @@ module SessionsHelper
 
     render json: {
       status: 401,
-      errors: 'Unauthorized'
+      errors: ['You need to be logged in!']
     }
   end
 

@@ -41,7 +41,6 @@ function EmptyFavoritesView() {
 function FavoritesLoader() {
   return (
     <div className="empty centered">
-      <h3>Connecting to the mothership...</h3>
       <Spinner animation="border" variant="dark" size="large" role="status" />
     </div>
   );

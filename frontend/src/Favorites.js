@@ -5,6 +5,7 @@ import Image from './Image';
 import { EmptyFavoritesView, FavoritesLoader } from './utils/commons';
 import _ from 'lodash';
 import { AppContext } from './context/Context';
+import FavoritesFilter from './FavoritesFilter';
 
 /**
  * @function Favorites
@@ -14,6 +15,7 @@ import { AppContext } from './context/Context';
 export default function Favorites() {
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState([]);
+  const [filterTerm, setFilterTerm] = useState('');
 
   let history = useHistory();
   const appContext = useContext(AppContext);
@@ -39,13 +41,17 @@ export default function Favorites() {
       ) : _.isEmpty(favorites) ? (
         <EmptyFavoritesView />
       ) : (
-        <div id="cards-wrapper">
-          <div className="container">
-            {favorites.map((image) => {
-              return <Image key={image.id} {...image} favorite={true} />;
-            })}
+        <Fragment>
+          <FavoritesFilter setFilterTerm={setFilterTerm} />
+
+          <div id="cards-wrapper">
+            <div className="container">
+              {favorites.filter(favorite => favorite.title.includes(filterTerm)).map((image) => {
+                return <Image key={image.id} {...image} favorite={true} />;
+              })}
+            </div>
           </div>
-        </div>
+        </Fragment>
       )}
     </Fragment>
   );
