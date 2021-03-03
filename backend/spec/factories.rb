@@ -17,5 +17,6 @@ FactoryBot.define do
   factory :favorite, class: Favorite do
     user
     image_id { 'gif_id' }
+    search_term { 'search term' }
   end
 end

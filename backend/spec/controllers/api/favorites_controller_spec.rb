@@ -25,7 +25,7 @@ describe Api::FavoritesController do
 
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['status']).to eq(401)
-        expect(parsed_response['errors']).to eq('Unauthorized')
+        expect(parsed_response['errors']).to eq(["You need to be logged in!"])
       end
     end
 
@@ -49,7 +49,7 @@ describe Api::FavoritesController do
 
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['status']).to eq(401)
-        expect(parsed_response['errors']).to eq('Unauthorized')
+        expect(parsed_response['errors']).to eq(["You need to be logged in!"])
       end
     end
 
@@ -59,7 +59,7 @@ describe Api::FavoritesController do
       it 'sets an image as favorite' do
         expect(user.favorites.size).to eq(0)
 
-        post :create, params: { image_id: 'ID' }
+        post :create, params: { favorite: { image_id: 'ID', search_term: 'something' } }
 
         expect(user.favorites.reload.size).to eq(1)
 
@@ -71,8 +71,18 @@ describe Api::FavoritesController do
       context 'when favorite with image ID already exists' do
         let!(:favorite) { create(:favorite, user: user, image_id: 'SomeID') }
 
-        it 'sets an image as favorite' do
-          post :create, params: { image_id: 'SomeID' }
+        it 'returns error' do
+          post :create, params: { favorite: { image_id: 'SomeID', search_term: 'something' } }
+
+          parsed_response = JSON.parse(response.body)
+          expect(parsed_response['success']).to be_falsey
+          expect(parsed_response['errors']).to be_any
+        end
+      end
+
+      context 'when search_term is empty' do
+        it 'returns error' do
+          post :create, params: { favorite: { image_id: 'ID', search_term: '' } }
 
           parsed_response = JSON.parse(response.body)
           expect(parsed_response['success']).to be_falsey
@@ -91,7 +101,7 @@ describe Api::FavoritesController do
 
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['status']).to eq(401)
-        expect(parsed_response['errors']).to eq('Unauthorized')
+        expect(parsed_response['errors']).to eq(["You need to be logged in!"])
       end
     end
 
