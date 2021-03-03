@@ -28,18 +28,20 @@ module Giphy
 
     # Returns the information of a group of gifs.
     # Params:
-    # - gif_ids: List of Giphy's IDs.
-    def self.get_gifs(gif_ids)
+    # - favorites: Array of hashes with the following format { image_id => search_term }
+    def self.get_gifs(favorites)
+      merged_favorites = favorites.inject(:merge)
+
       response = get(BASE_URL, {
                        query: {
-                         ids: gif_ids.join(','),
+                         ids: merged_favorites.keys.join(','),
                          api_key: AppCredentials[:shared][:giphy][:api_key]
                        }
                      })
       return nil if response.code != 200
 
       parse_response(response).map do |image_data|
-        deserialize(image_data)
+        deserialize(image_data, merged_favorites[image_data['id']])
       end
     end
 
@@ -54,11 +56,12 @@ module Giphy
     # Transforms the API response into a Image instance.
     # Params:
     # - image_data: Image's information returned by the API.
-    def self.deserialize(image_data)
+    def self.deserialize(image_data, search_term = nil)
       Image.new(
         id: image_data['id'],
         title: image_data['title'],
-        images: image_data['images']
+        images: image_data['images'],
+        search_term: search_term
       )
     end
   end

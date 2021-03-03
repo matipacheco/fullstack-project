@@ -5,12 +5,9 @@ module Api
     before_action :require_login, only: %i[index create destroy]
 
     # Lists all user's favorite images
-    # Params:
-    # - user_id: User's ID.
+    # Params: -
     def index
-      fresh_when etag: (@favorite_ids = current_user.favorites.pluck(:image_id))
-
-      if (response = Giphy::GifService.get_gifs(@favorite_ids))
+      if (response = Giphy::GifService.get_gifs(current_user.favorites.map(&:search_hash)))
         render json: {
           success: true,
           favorites: response

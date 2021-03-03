@@ -5,7 +5,7 @@
 class Image
   include ActiveModel::Model
 
-  attr_accessor :id, :title, :images, :url
+  attr_accessor :id, :title, :images, :url, :search_term
 
   def initialize(attributes = {})
     super

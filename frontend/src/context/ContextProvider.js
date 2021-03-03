@@ -6,6 +6,7 @@ const ProviderWrapper = (props) => {
   const [user, setUser] = useState(appContext.user);
   const [error, setError] = useState(appContext.error);
   const [images, setImages] = useState(appContext.images);
+  const [searchTerm, setSearchTerm] = useState(appContext.images);
 
   const updateImages = (images) => {
     setImages(images);
@@ -19,16 +20,22 @@ const ProviderWrapper = (props) => {
     setUser(userData);
   };
 
+  const updateSearchTerm = (searchTerm) => {
+    setSearchTerm(searchTerm);
+  };
+
   const provider = {
     user,
     error,
     images,
+    searchTerm,
     updateUser,
     updateError,
     updateImages,
+    updateSearchTerm,
   };
 
   return <AppContextProvider value={provider}>{props.children}</AppContextProvider>;
-}
+};
 
 export default ProviderWrapper;

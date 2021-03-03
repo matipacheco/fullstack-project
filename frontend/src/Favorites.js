@@ -46,7 +46,7 @@ export default function Favorites() {
 
           <div id="cards-wrapper">
             <div className="container">
-              {favorites.filter(favorite => favorite.title.includes(filterTerm)).map((image) => {
+              {favorites.filter(favorite => favorite.search_term.includes(filterTerm)).map((image) => {
                 return <Image key={image.id} {...image} favorite={true} />;
               })}
             </div>

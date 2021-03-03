@@ -161,12 +161,15 @@ export const verifyUserLoggedIn = (successCallback, errorCallback) => {
  * @public
  */
 
-export const addToFavorites = (gifId, successCallback, errorCallback) => {
+export const addToFavorites = (favoriteData, successCallback, errorCallback) => {
   axios
     .post(
       'http://localhost:3010/api/favorites',
       {
-        image_id: gifId,
+        favorite: {
+          image_id: favoriteData.gifId,
+          search_term: favoriteData.searchTerm,
+        }
       },
       {
         withCredentials: true,

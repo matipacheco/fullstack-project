@@ -38,8 +38,9 @@ export default function Search() {
       appContext.updateError(false);
     }
 
-    appContext.updateImages(response);
     setLoading(false);
+    appContext.updateImages(response);
+    appContext.updateSearchTerm(searchBarRef.current.value);
   };
 
   const handleError = () => {
@@ -59,7 +60,6 @@ export default function Search() {
 
   const handleOnKeyUp = (event) => {
     event.preventDefault();
-
     handleEnterKey(event, handleSearch);
   };
 

@@ -24,7 +24,7 @@ export default function Image(props) {
   };
 
   const setAsFavorite = () => {
-    addToFavorites(props.id, handleResponse, handleError);
+    addToFavorites({ gifId: props.id, searchTerm: appContext.searchTerm }, handleResponse, handleError);
   };
 
   const handleResponse = (response) => {
