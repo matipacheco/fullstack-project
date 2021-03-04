@@ -64,6 +64,7 @@ function AddToFavorites(props) {
 
   const handleCLick = (event) => {
     event.preventDefault();
+
     setFavoriteChecked(true);
     props.handleOnClick(event);
   };

@@ -86,7 +86,6 @@ describe Api::FavoritesController do
 
           parsed_response = JSON.parse(response.body)
           expect(parsed_response['success']).to be_falsey
-          expect(parsed_response['errors']).to be_any
         end
       end
     end

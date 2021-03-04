@@ -12,12 +12,7 @@ import axios from 'axios';
 export const search = (searchTerm, successCallback, errorCallback) => {
   axios
     .get(
-      'http://localhost:3010/api/images/search',
-      {
-        params: {
-          q: searchTerm,
-        },
-      },
+      `http://localhost:3010/api/images/search?q=${searchTerm}`,
       {
         withCredentials: true,
       }

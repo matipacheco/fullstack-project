@@ -10,8 +10,12 @@ module Giphy
     # Returns a list of gifs that match a given search term.
     # Params:
     # - q: The search term.
+    # - favorites_search_hash: Array of hashes for a given user with its favorite images data in the following format:
+    #                         { image_id => search_term }
     # - limit: The maximum number of elements to be fetched.
-    def self.search(q, limit = 20)
+    def self.search(q, favorites_search_hash = {}, limit = 20)
+      merged_favorites = merge_hash(favorites_search_hash)
+
       response = get(BASE_URL + '/search', {
                        query: {
                          q: q,
@@ -22,15 +26,16 @@ module Giphy
       return nil if response.code != 200
 
       parse_response(response).map do |image_data|
-        deserialize(image_data)
+        deserialize(image_data, merged_favorites[image_data['id']])
       end
     end
 
     # Returns the information of a group of gifs.
     # Params:
-    # - favorites: Array of hashes with the following format { image_id => search_term }
-    def self.get_gifs(favorites)
-      merged_favorites = favorites.inject(:merge)
+    # - favorites_search_hash: Array of hashes for a given user with its favorite images data in the following format:
+    #                         { image_id => search_term }
+    def self.get_gifs(favorites_search_hash)
+      merged_favorites = merge_hash(favorites_search_hash)
 
       response = get(BASE_URL, {
                        query: {
@@ -43,6 +48,15 @@ module Giphy
       parse_response(response).map do |image_data|
         deserialize(image_data, merged_favorites[image_data['id']])
       end
+    end
+
+    # Returns a single merged hash with a user's favorite images data.
+    # Params:
+    # - favorites_search_hash: Array of hashes with the following format { image_id => search_term }
+    def self.merge_hash(favorites_search_hash = nil)
+      return {} unless favorites_search_hash
+
+      favorites_search_hash.inject(:merge)
     end
 
     # Parses API JSON response into a readable hash.

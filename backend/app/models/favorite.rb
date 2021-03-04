@@ -10,6 +10,9 @@ class Favorite < ApplicationRecord
 
   validates :search_term, presence: true
 
+  # Given a favorite instance, this method returns a hash which has as key the related
+  # image_id and as value the search term that led the user to find such image.
+  # Params: -
   def search_hash
     { image_id => search_term }
   end
