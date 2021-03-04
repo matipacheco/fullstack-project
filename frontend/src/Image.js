@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { AppContext } from './context/Context';
 import { addToFavorites } from './utils/requests';
 import { toast } from 'react-toastify';
-import { OverlayTrigger, Popover, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 
 /**
  * @function Image
@@ -47,24 +47,36 @@ export default function Image(props) {
   return (
     <figure>
       <img src={props.url} alt={props.title} onLoad={() => setImageLoaded(true)} />
-      {!props.favorite && <AddToFavorites imageLoaded={imageLoaded} handleOnClick={handleOnClick} />}
+      {
+        <AddToFavorites
+          id={props.id}
+          imageLoaded={imageLoaded}
+          handleOnClick={handleOnClick}
+          alreadyStarred={props.search_term}
+        />
+      }
     </figure>
   );
 }
 
 function AddToFavorites(props) {
+  const [favoriteChecked, setFavoriteChecked] = useState(props.alreadyStarred);
+
+  const handleCLick = (event) => {
+    event.preventDefault();
+    setFavoriteChecked(true);
+    props.handleOnClick(event);
+  };
+
   return (
-    <figcaption className={!props.imageLoaded ? 'image-disabled' : ''} onClick={props.handleOnClick}>
+    <figcaption>
       {props.imageLoaded ? (
-        <OverlayTrigger
-          placement="right"
-          delay={{ show: 50, hide: 50 }}
-          overlay={<Popover id="add-favorite">Add to favorites</Popover>}
-        >
-          <span role="img" aria-label="heart">
-            ❤️
-          </span>
-        </OverlayTrigger>
+        <Fragment>
+          <input id={`toggle-heart-${props.id}`} type="checkbox" checked={favoriteChecked} />
+          <label htmlFor={`toggle-heart-${props.id}`} onClick={handleCLick}>
+            ❤
+          </label>
+        </Fragment>
       ) : (
         <Spinner as="span" animation="border" variant="dark" size="sm" role="status" />
       )}

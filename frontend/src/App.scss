@@ -47,20 +47,34 @@ nav {
     grid-template-rows: 1fr auto;
     margin-bottom: 10px;
     break-inside: avoid;
+    justify-content: center;
 
-    .image-disabled {
-      pointer-events: none;
+    [id^='toggle-heart'] {
+      position: absolute;
+      left: -100vw;
+
+      &:checked + label {
+        color: #e2264d;
+        will-change: font-size;
+        animation: heart 1s cubic-bezier(.17, .89, .32, 1.49);
+      }
+    }
+
+    [for^='toggle-heart'] {
+      align-self: center;
+      color: #aab8c2;
+      font-size: 2em;
+      cursor: pointer;
+    }
+
+    @keyframes heart {
+      0%, 15% { font-size: 0; }
     }
   }
-  
+
   figure > img {
     grid-row: 1 / -1;
     grid-column: 1;
-  }
-
-  figure span {
-    color: black;
-    text-decoration: none;
   }
 
   figcaption {
@@ -68,7 +82,8 @@ nav {
     grid-column: 1;
     background-color: rgba(255,255,255,.5);
     padding: .2em .5em;
-    justify-self: start;
+    height: 3.5rem;
+    width: 3rem;
     cursor: pointer;
   }
 
@@ -77,10 +92,6 @@ nav {
     column-gap: 10px;
     width: 100%;
   }
-}
-
-#add-favorite {
-  padding: .5rem;
 }
 
 .empty {
