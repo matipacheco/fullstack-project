@@ -1,8 +1,8 @@
 import React, { Fragment, useContext, useState } from 'react';
 import { AppContext } from './context/Context';
-import { addToFavorites } from './utils/requests';
 import { toast } from 'react-toastify';
 import { Spinner } from 'react-bootstrap';
+import { addToFavorites, removeFromFavorites } from './utils/requests';
 
 /**
  * @function Image
@@ -41,20 +41,21 @@ export default function Image(props) {
 
   const handleOnClick = (event) => {
     event.preventDefault();
+
     setAsFavorite();
   };
 
   return (
     <figure>
       <img src={props.url} alt={props.title} onLoad={() => setImageLoaded(true)} />
-      {
+      {!props.favorite && (
         <AddToFavorites
           id={props.id}
           imageLoaded={imageLoaded}
           handleOnClick={handleOnClick}
           alreadyStarred={props.search_term}
         />
-      }
+      )}
     </figure>
   );
 }
