@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resources :users, only: :create
     resources :favorites, only: %i[index create] do
       collection do
-        delete :destroy_by_image_id
+        delete :destroy
       end
     end
   end

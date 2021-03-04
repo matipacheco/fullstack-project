@@ -2,7 +2,7 @@
 
 module Api
   class FavoritesController < ApplicationController
-    before_action :require_login, only: %i[index create destroy_by_image_id]
+    before_action :require_login, only: %i[index create destroy]
 
     # Lists all user's favorite images
     # Params: -
@@ -28,6 +28,7 @@ module Api
 
       if @favorite.save
         render json: {
+          status: 201,
           success: true,
           favorite: @favorite
         }
@@ -42,11 +43,12 @@ module Api
     # Removes an image from favorites.
     # Params:
     # - favorite: Hash that comes inside the params. It containes just the image_id.
-    def destroy_by_image_id
+    def destroy
       @favorite = current_user.favorites.find_by(favorite_params)
 
       if @favorite.destroy
         render json: {
+          status: 204,
           success: true
         }
       else

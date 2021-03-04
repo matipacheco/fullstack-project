@@ -64,6 +64,7 @@ describe Api::FavoritesController do
         expect(user.favorites.reload.size).to eq(1)
 
         parsed_response = JSON.parse(response.body)
+        expect(parsed_response['status']).to eq(201)
         expect(parsed_response['success']).to be_truthy
         expect(parsed_response['favorite']).to be_any
       end
@@ -91,12 +92,12 @@ describe Api::FavoritesController do
     end
   end
 
-  describe 'DELETE destroy_by_image_id' do
+  describe 'DELETE destroy' do
     let!(:favorite) { create(:favorite, user: user) }
 
     context 'user is not logged in' do
       it 'returns error' do
-        delete :destroy_by_image_id, params: { favorite: { image_id: favorite.image_id } }
+        delete :destroy, params: { favorite: { image_id: favorite.image_id } }
 
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['status']).to eq(401)
@@ -110,12 +111,12 @@ describe Api::FavoritesController do
       it 'deletes favorite image' do
         expect(user.favorites.size).to eq(1)
 
-        delete :destroy_by_image_id, params: { favorite: { image_id: favorite.image_id } }
+        delete :destroy, params: { favorite: { image_id: favorite.image_id } }
 
         expect(user.favorites.reload.size).to eq(0)
 
         parsed_response = JSON.parse(response.body)
-        expect(parsed_response['success']).to be_truthy
+        expect(parsed_response['status']).to eq(204)
       end
     end
   end
