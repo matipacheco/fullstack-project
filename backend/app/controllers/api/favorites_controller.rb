@@ -7,7 +7,7 @@ module Api
     # Lists all user's favorite images
     # Params: -
     def index
-      if (response = Giphy::GifService.get_gifs(current_user.favorites.map(&:search_hash)))
+      if (response = Giphy::GifService.get_gifs(current_user.favorites_search_hash))
         render json: {
           success: true,
           favorites: response

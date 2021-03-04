@@ -3,7 +3,9 @@
 require 'rails_helper'
 
 describe Giphy::GifService do
+  let(:user) { create(:user) }
   let(:image) { create(:image) }
+  let(:favorite) { create(:favorite, user: user, image_id: image.id) }
 
   describe 'search_method' do
     context 'when API responds successfully' do
@@ -37,8 +39,9 @@ describe Giphy::GifService do
     end
   end
 
-  describe 'get_gifd method' do
-    let!(:second_image) { create(:image, id: 'ID2') }
+  describe 'get_gifs method' do
+    let(:second_image) { create(:image, id: 'ID2') }
+    let(:second_favorite) { create(:favorite, user: user, image_id: second_image.id) }
 
     context 'when API responds successfully' do
       before do
@@ -53,7 +56,10 @@ describe Giphy::GifService do
       end
 
       it "returns API's response" do
-        response = described_class.get_gifs([image.id, second_image.id])
+        response = described_class.get_gifs([
+          { image.id => favorite.search_term },
+          { second_image.id => second_favorite.search_term }
+        ])
         expect(response).not_to be_empty
       end
     end
@@ -66,7 +72,10 @@ describe Giphy::GifService do
       end
 
       it "returns nil response" do
-        expect(described_class.get_gifs([image.id, second_image.id])).to be_nil
+        expect(described_class.get_gifs([
+          { image.id => favorite.search_term },
+          { second_image.id => second_favorite.search_term }
+        ])).to be_nil
       end
     end
   end
