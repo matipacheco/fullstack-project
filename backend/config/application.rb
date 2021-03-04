@@ -16,6 +16,7 @@ module Backend
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    require './lib/core_extensions'
     require './app/services/gif_service'
   end
 end

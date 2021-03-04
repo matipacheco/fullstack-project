@@ -12,40 +12,46 @@ describe Api::ImagesController do
     end
 
     context "when Giphy::GifService communicates successfuly with Giphy's API" do
-      it 'return status code 200' do
-        stub_request(:get, 'https://api.giphy.com/v1/gifs/search?api_key=hu1GClEpq2kY77FICWNYInvhcGQO97TS&limit=20&q=dog')
-          .with(
-            headers: {
-              'Accept' => '*/*',
-              'User-Agent' => 'Ruby',
-              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'
-            }
+      before do
+        stub_request(:get, 'https://api.giphy.com/v1/gifs/search').with(
+          query: {
+            q: 'dog',
+            limit: 20,
+            api_key: 'hu1GClEpq2kY77FICWNYInvhcGQO97TS'
+          },
+          headers: {
+            'Accept' => '*/*'
+          }
+        ).to_return(
+          status: 200,
+          body: {
+            data: [image]
+          }.to_json,
+          headers: {}
         )
-          .to_return(
-            status: 200,
-            body: {
-              data: [image]
-            }.to_json,
-            headers: {}
-        )
+      end
 
+      it 'return status code 200' do
         get :search, params: { q: 'dog' }
         expect(JSON.parse(response.body)['success']).to be_truthy
       end
     end
 
     context "when Giphy::GifService does not communicate successfuly with Giphy's API" do
-      it 'return status code 500' do
-        stub_request(:get, 'https://api.giphy.com/v1/gifs/search?api_key=hu1GClEpq2kY77FICWNYInvhcGQO97TS&limit=20&q=dog')
-          .with(
-            headers: {
-              'Accept' => '*/*',
-              'User-Agent' => 'Ruby',
-              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'
-            }
-        )
-          .to_return(status: 500)
+      before do
+        stub_request(:get, 'https://api.giphy.com/v1/gifs/search').with(
+          query: {
+            q: 'dog',
+            limit: 20,
+            api_key: 'hu1GClEpq2kY77FICWNYInvhcGQO97TS'
+          },
+          headers: {
+            'Accept' => '*/*'
+          }
+        ).to_return(status: 500)
+      end
 
+      it 'return status code 500' do
         get :search, params: { q: 'dog' }
         expect(JSON.parse(response.body)['success']).to be_falsey
       end

@@ -10,13 +10,13 @@ describe Api::FavoritesController do
 
     before do
       stub_request(:get, 'https://api.giphy.com/v1/gifs')
-        .with(query: { ids: favorite.image_id.to_s, api_key: AppCredentials[:shared][:giphy][:api_key]})
+        .with(query: { ids: favorite.image_id.to_s, api_key: AppCredentials[:shared][:giphy][:api_key] })
         .to_return(
           status: 200,
           body: {
             data: [favorite]
           }.to_json
-        )      
+        )
     end
 
     context 'user is not logged in' do
@@ -25,7 +25,7 @@ describe Api::FavoritesController do
 
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['status']).to eq(401)
-        expect(parsed_response['errors']).to eq(["You need to be logged in!"])
+        expect(parsed_response['errors']).to eq(['You need to be logged in!'])
       end
     end
 
@@ -49,7 +49,7 @@ describe Api::FavoritesController do
 
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['status']).to eq(401)
-        expect(parsed_response['errors']).to eq(["You need to be logged in!"])
+        expect(parsed_response['errors']).to eq(['You need to be logged in!'])
       end
     end
 
@@ -100,7 +100,7 @@ describe Api::FavoritesController do
 
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['status']).to eq(401)
-        expect(parsed_response['errors']).to eq(["You need to be logged in!"])
+        expect(parsed_response['errors']).to eq(['You need to be logged in!'])
       end
     end
 

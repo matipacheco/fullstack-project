@@ -18,7 +18,7 @@ describe Api::UsersController do
     context 'when username is not present' do
       it 'returns error' do
         post :create, params: { user: { username: nil, password: 'supersecret', password_confirmation: 'supersecret' } }
-        
+
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['logged_in']).to be_nil
         expect(parsed_response['user']).to be_nil
@@ -29,7 +29,7 @@ describe Api::UsersController do
     context 'when password and password_confirmation are different' do
       it 'returns error' do
         post :create, params: { user: { username: 'Mati', password: 'supersecret', password_confirmation: 'notsecretatall' } }
-        
+
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['logged_in']).to be_nil
         expect(parsed_response['user']).to be_nil

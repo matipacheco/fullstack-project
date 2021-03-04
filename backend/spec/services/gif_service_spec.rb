@@ -10,20 +10,21 @@ describe Giphy::GifService do
   describe 'search_method' do
     context 'when API responds successfully' do
       before do
-        stub_request(:get, 'https://api.giphy.com/v1/gifs/search?api_key=hu1GClEpq2kY77FICWNYInvhcGQO97TS&limit=20&q=dog')
-          .with(
-            headers: {
-              'Accept' => '*/*',
-              'User-Agent' => 'Ruby',
-              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'
-            }
-        )
-          .to_return(
-            status: 200,
-            body: {
-              data: [image]
-            }.to_json,
-            headers: {}
+        stub_request(:get, 'https://api.giphy.com/v1/gifs/search').with(
+          query: {
+            q: 'dog',
+            limit: 20,
+            api_key: 'hu1GClEpq2kY77FICWNYInvhcGQO97TS'
+          },
+          headers: {
+            'Accept' => '*/*'
+          }
+        ).to_return(
+          status: 200,
+          body: {
+            data: [image]
+          }.to_json,
+          headers: {}
         )
       end
 
@@ -35,15 +36,16 @@ describe Giphy::GifService do
 
     context 'when API responds with error' do
       before do
-        stub_request(:get, 'https://api.giphy.com/v1/gifs/search?api_key=hu1GClEpq2kY77FICWNYInvhcGQO97TS&limit=20&q=dog')
-          .with(
-            headers: {
-              'Accept' => '*/*',
-              'User-Agent' => 'Ruby',
-              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'
-            }
-        )
-          .to_return(status: 500)
+        stub_request(:get, 'https://api.giphy.com/v1/gifs/search').with(
+          query: {
+            q: 'dog',
+            limit: 20,
+            api_key: 'hu1GClEpq2kY77FICWNYInvhcGQO97TS'
+          },
+          headers: {
+            'Accept' => '*/*'
+          }
+        ).to_return(status: 500)
       end
 
       it 'returns nil response' do

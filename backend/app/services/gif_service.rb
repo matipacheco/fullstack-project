@@ -53,8 +53,8 @@ module Giphy
     # Returns a single merged hash with a user's favorite images data.
     # Params:
     # - favorites_search_hash: Array of hashes with the following format { image_id => search_term }
-    def self.merge_hash(favorites_search_hash = nil)
-      return {} unless favorites_search_hash
+    def self.merge_hash(favorites_search_hash = {})
+      return {} if favorites_search_hash.blank?
 
       favorites_search_hash.inject(:merge)
     end

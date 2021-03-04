@@ -20,7 +20,7 @@ describe Api::SessionsController do
     context 'when credentials are invalid' do
       it 'returns error' do
         post :create, params: { user: { username: 'Mati', password: 'wrongpassword' } }
-        
+
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['logged_in']).to be_nil
         expect(parsed_response['user']).to be_nil
