@@ -91,12 +91,12 @@ describe Api::FavoritesController do
     end
   end
 
-  describe 'DELETE destroy' do
+  describe 'DELETE destroy_by_image_id' do
     let!(:favorite) { create(:favorite, user: user) }
 
     context 'user is not logged in' do
       it 'returns error' do
-        delete :destroy, params: { id: favorite.id }
+        delete :destroy_by_image_id, params: { favorite: { image_id: favorite.image_id } }
 
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['status']).to eq(401)
@@ -110,7 +110,7 @@ describe Api::FavoritesController do
       it 'deletes favorite image' do
         expect(user.favorites.size).to eq(1)
 
-        delete :destroy, params: { id: favorite.id }
+        delete :destroy_by_image_id, params: { favorite: { image_id: favorite.image_id } }
 
         expect(user.favorites.reload.size).to eq(0)
 

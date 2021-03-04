@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     end
 
     resources :users, only: :create
-    resources :favorites, only: %i[index create destroy]
+    resources :favorites, only: %i[index create] do
+      collection do
+        delete :destroy_by_image_id
+      end
+    end
   end
 end
