@@ -150,7 +150,7 @@ export const verifyUserLoggedIn = (successCallback, errorCallback) => {
 /**
  * Allows user to add an image to its favorites, using the API.
  *
- * @param {string} gidId
+ * @param {object} favoriteData ({ favorite: { gifId: '', searchTerm: '' } })
  * @param {function} successCallback
  * @param {function} errorCallback
  * @public
@@ -164,6 +164,38 @@ export const addToFavorites = (favoriteData, successCallback, errorCallback) => 
         favorite: {
           image_id: favoriteData.gifId,
           search_term: favoriteData.searchTerm,
+        }
+      },
+      {
+        withCredentials: true,
+      }
+    )
+    .then((response) => {
+      successCallback(response.data);
+    })
+    .catch((error) => {
+      if (errorCallback) {
+        errorCallback(error);
+      }
+    });
+};
+
+/**
+ * Allows user to add an image to its favorites, using the API.
+ *
+ * @param {object} favoriteData ({ favorite: { gifId: '', searchTerm: '' } })
+ * @param {function} successCallback
+ * @param {function} errorCallback
+ * @public
+ */
+
+export const removeFromFavorites = (favoriteData, successCallback, errorCallback) => {
+  axios
+    .post(
+      'http://localhost:3010/api/favorites/delete',
+      {
+        favorite: {
+          image_id: favoriteData.gifId,
         }
       },
       {
