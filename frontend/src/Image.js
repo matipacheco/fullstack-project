@@ -1,8 +1,9 @@
 import React, { Fragment, useContext, useState } from 'react';
-import { AppContext } from './context/Context';
+import _ from 'lodash';
 import { toast } from 'react-toastify';
 import { Spinner } from 'react-bootstrap';
-import { addToFavorites, removeFromFavorites } from './utils/requests';
+import { AppContext } from './context/Context';
+import { addToFavorites } from './utils/requests';
 
 /**
  * @function Image
@@ -54,6 +55,7 @@ export default function Image(props) {
           imageLoaded={imageLoaded}
           handleOnClick={handleOnClick}
           alreadyStarred={props.search_term}
+          userLogged={!_.isEmpty(appContext.user)}
         />
       )}
     </figure>
@@ -66,8 +68,13 @@ function AddToFavorites(props) {
   const handleCLick = (event) => {
     event.preventDefault();
 
-    setFavoriteChecked(true);
     props.handleOnClick(event);
+
+    if (favoriteChecked) {
+      return;
+    } else if (props.userLogged) {
+      setFavoriteChecked(true);
+    }
   };
 
   return (

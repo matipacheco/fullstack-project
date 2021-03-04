@@ -14,7 +14,7 @@ export default function Logout() {
 
   const successCallback = () => {
     appContext.updateUser({});
-    localStorage.setItem('user', null);
+    appContext.updateImages([]);
   };
 
   return (
