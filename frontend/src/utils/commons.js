@@ -58,7 +58,7 @@ function NetworkErrorView() {
     if (appContext.error) {
       displayToast();
     }
-  }, [appContext.error])
+  }, [appContext.error]);
 
   const displayToast = () => {
     toast.error('We were to communicate with our services', {
@@ -71,7 +71,41 @@ function NetworkErrorView() {
     });
   };
 
-  return <Fragment/>;
+  return <Fragment />;
 }
 
-export { EmptySearchView, NetworkErrorView, EmptyFavoritesView, FavoritesLoader };
+const toastConfig = {
+  position: 'top-right',
+  autoClose: 4000,
+  draggable: false,
+  closeOnClick: true,
+  pauseOnHover: false,
+  hideProgressBar: false,
+};
+
+/**
+ * @function addFavoriteSuccess
+ * Displays success toast when a GIF is successfully set as favorite.
+ */
+
+const addFavoriteSuccess = () => {
+  return toast.success('GIF added to your favorites! 🤘🏾', toastConfig);
+};
+
+/**
+ * @function deleteFavoriteSuccess
+ * Displays success toast when a GIF is successfully removed from favorites.
+ */
+
+const deleteFavoriteSuccess = () => {
+  return toast.info('GIF removed from you favorites 😞', toastConfig);
+};
+
+export {
+  EmptySearchView,
+  NetworkErrorView,
+  EmptyFavoritesView,
+  FavoritesLoader,
+  addFavoriteSuccess,
+  deleteFavoriteSuccess,
+};

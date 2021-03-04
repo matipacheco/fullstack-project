@@ -1,9 +1,9 @@
 import React, { Fragment, useContext, useState } from 'react';
 import _ from 'lodash';
-import { toast } from 'react-toastify';
 import { Spinner } from 'react-bootstrap';
 import { AppContext } from './context/Context';
 import { addToFavorites, removeFromFavorites } from './utils/requests';
+import { addFavoriteSuccess, deleteFavoriteSuccess } from './utils/commons';
 
 /**
  * @function Image
@@ -15,15 +15,6 @@ export default function Image(props) {
   const [isFavorite, setIsFavorite] = useState(!_.isEmpty(props.search_term));
 
   const appContext = useContext(AppContext);
-
-  const toastConfig = {
-    position: 'top-right',
-    autoClose: 4000,
-    draggable: false,
-    closeOnClick: true,
-    pauseOnHover: false,
-    hideProgressBar: false,
-  };
 
   const handleOnClick = (event) => {
     event.preventDefault();
@@ -46,14 +37,10 @@ export default function Image(props) {
   };
 
   const handleResponse = (response) => {
-    if (response.errors) {
-      return toast.warn(response.errors[0], toastConfig);
-
-    } else if (response.success && response.status === 204) {
-      toast.info('GIF removed from you favorites ', toastConfig);
-
+    if (response.success && response.status === 204) {
+      deleteFavoriteSuccess();
     } else if (response.success && response.status === 201) {
-      toast.success('GIF added to your favorites! 🤘🏾', toastConfig);
+      addFavoriteSuccess();
     }
   };
 
