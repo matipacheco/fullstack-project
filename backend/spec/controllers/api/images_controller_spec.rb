@@ -13,14 +13,21 @@ describe Api::ImagesController do
 
     context "when Giphy::GifService communicates successfuly with Giphy's API" do
       it 'return status code 200' do
-        stub_request(:get, 'https://api.giphy.com/v1/gifs/search')
-          .with(query: { q: 'dog', limit: 10, api_key: AppCredentials[:shared][:giphy][:api_key]})
+        stub_request(:get, 'https://api.giphy.com/v1/gifs/search?api_key=hu1GClEpq2kY77FICWNYInvhcGQO97TS&limit=20&q=dog')
+          .with(
+            headers: {
+              'Accept' => '*/*',
+              'User-Agent' => 'Ruby',
+              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'
+            }
+        )
           .to_return(
             status: 200,
             body: {
               data: [image]
-            }.to_json
-          )
+            }.to_json,
+            headers: {}
+        )
 
         get :search, params: { q: 'dog' }
         expect(JSON.parse(response.body)['success']).to be_truthy
@@ -29,8 +36,14 @@ describe Api::ImagesController do
 
     context "when Giphy::GifService does not communicate successfuly with Giphy's API" do
       it 'return status code 500' do
-        stub_request(:get, 'https://api.giphy.com/v1/gifs/search')
-          .with(query: { q: 'dog', limit: 10, api_key: AppCredentials[:shared][:giphy][:api_key]})
+        stub_request(:get, 'https://api.giphy.com/v1/gifs/search?api_key=hu1GClEpq2kY77FICWNYInvhcGQO97TS&limit=20&q=dog')
+          .with(
+            headers: {
+              'Accept' => '*/*',
+              'User-Agent' => 'Ruby',
+              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'
+            }
+        )
           .to_return(status: 500)
 
         get :search, params: { q: 'dog' }
