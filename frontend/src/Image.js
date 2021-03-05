@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Spinner } from 'react-bootstrap';
 import { AppContext } from './context/Context';
 import { addToFavorites, removeFromFavorites } from './utils/requests';
-import { addFavoriteSuccess, deleteFavoriteSuccess } from './utils/commons';
+import { addFavoriteSuccess, deleteFavoriteSuccess, favoriteError } from './utils/commons';
 
 /**
  * @function Image
@@ -20,11 +20,9 @@ export default function Image(props) {
     event.preventDefault();
 
     if (isFavorite) {
-      setIsFavorite(false);
       return removeFavorite();
     }
 
-    setIsFavorite(true);
     return setAsFavorite();
   };
 
@@ -37,14 +35,20 @@ export default function Image(props) {
   };
 
   const handleResponse = (response) => {
-    if (response.success && response.status === 204) {
+    if (response.errors) {
+      favoriteError(response.errors[0]);
+
+    } else if (response.success && response.status === 204) {
       if (props.removeLocalFavorite) {
         props.removeLocalFavorite(props.id);
       }
+
       deleteFavoriteSuccess();
+      setIsFavorite(false);
 
     } else if (response.success && response.status === 201) {
       addFavoriteSuccess();
+      setIsFavorite(true);
     }
   };
 
@@ -84,7 +88,7 @@ function AddToFavorites(props) {
     <figcaption>
       {props.imageLoaded ? (
         <Fragment>
-          <input id={`toggle-heart-${props.id}`} type="checkbox" checked={props.isFavorite} />
+          <input id={`toggle-heart-${props.id}`} type="checkbox" checked={props.isFavorite} onChange={() => {}} />
           <label htmlFor={`toggle-heart-${props.id}`} onClick={handleCLick}>
             ❤
           </label>

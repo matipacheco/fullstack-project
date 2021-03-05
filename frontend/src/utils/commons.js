@@ -101,6 +101,15 @@ const deleteFavoriteSuccess = () => {
   return toast.info('GIF removed from you favorites 😞', toastConfig);
 };
 
+/**
+ * @function favoriteError
+ * Displays error message when an error occurs on GIF creation.
+ */
+
+const favoriteError = (errorMessage) => {
+  return toast.warn(errorMessage, toastConfig);
+};
+
 export {
   EmptySearchView,
   NetworkErrorView,
@@ -108,4 +117,5 @@ export {
   FavoritesLoader,
   addFavoriteSuccess,
   deleteFavoriteSuccess,
+  favoriteError,
 };
