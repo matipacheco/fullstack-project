@@ -38,7 +38,11 @@ export default function Image(props) {
 
   const handleResponse = (response) => {
     if (response.success && response.status === 204) {
+      if (props.removeLocalFavorite) {
+        props.removeLocalFavorite(props.id);
+      }
       deleteFavoriteSuccess();
+
     } else if (response.success && response.status === 201) {
       addFavoriteSuccess();
     }

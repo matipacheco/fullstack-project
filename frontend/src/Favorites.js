@@ -34,6 +34,11 @@ export default function Favorites() {
     listFavorites(handleSuccess, handleError);
   }, [history, appContext]);
 
+  const removeLocalFavorite = (imageId) => {
+    const updatedFavorites = favorites.filter((favorite) => favorite.id !== imageId);
+    setFavorites(updatedFavorites);
+  };
+
   return (
     <Fragment>
       {loading ? (
@@ -46,9 +51,11 @@ export default function Favorites() {
 
           <div id="cards-wrapper">
             <div className="container">
-              {favorites.filter(favorite => favorite.search_term.includes(filterTerm)).map((image) => {
-                return <Image key={image.id} {...image} favorite={true} />;
-              })}
+              {favorites
+                .filter((favorite) => favorite.search_term.includes(filterTerm))
+                .map((image) => {
+                  return <Image key={image.id} {...image} removeLocalFavorite={removeLocalFavorite} />;
+                })}
             </div>
           </div>
         </Fragment>
