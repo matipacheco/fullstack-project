@@ -3,19 +3,29 @@
 require 'rails_helper'
 
 describe Giphy::GifService do
-  let(:gif) { create(:gif) }
+  let(:user) { create(:user) }
+  let(:image) { create(:image) }
+  let(:favorite) { create(:favorite, user: user, image_id: image.id) }
 
   describe 'search_method' do
     context 'when API responds successfully' do
       before do
-        stub_request(:get, 'https://api.giphy.com/v1/gifs/search')
-          .with(query: { q: 'dog', limit: 10, api_key: AppCredentials[:shared][:giphy][:api_key]})
-          .to_return(
-            status: 200,
-            body: {
-              data: [gif]
-            }.to_json
-          )
+        stub_request(:get, 'https://api.giphy.com/v1/gifs/search').with(
+          query: {
+            q: 'dog',
+            limit: 20,
+            api_key: 'hu1GClEpq2kY77FICWNYInvhcGQO97TS'
+          },
+          headers: {
+            'Accept' => '*/*'
+          }
+        ).to_return(
+          status: 200,
+          body: {
+            data: [image]
+          }.to_json,
+          headers: {}
+        )
       end
 
       it "returns API's response" do
@@ -26,46 +36,62 @@ describe Giphy::GifService do
 
     context 'when API responds with error' do
       before do
-        stub_request(:get, 'https://api.giphy.com/v1/gifs/search')
-          .with(query: { q: 'dog', limit: 10, api_key: AppCredentials[:shared][:giphy][:api_key]})
-          .to_return(status: 500)
+        stub_request(:get, 'https://api.giphy.com/v1/gifs/search').with(
+          query: {
+            q: 'dog',
+            limit: 20,
+            api_key: 'hu1GClEpq2kY77FICWNYInvhcGQO97TS'
+          },
+          headers: {
+            'Accept' => '*/*'
+          }
+        ).to_return(status: 500)
       end
 
-      it "returns nil response" do
+      it 'returns nil response' do
         expect(described_class.search('dog')).to be_nil
       end
     end
   end
 
-  describe 'get_gif method' do
+  describe 'get_gifs method' do
+    let(:second_image) { create(:image, id: 'ID2') }
+    let(:second_favorite) { create(:favorite, user: user, image_id: second_image.id) }
+
     context 'when API responds successfully' do
       before do
-        stub_request(:get, 'https://api.giphy.com/v1/gifs/ID')
-          .with(query: { api_key: AppCredentials[:shared][:giphy][:api_key]})
+        stub_request(:get, 'https://api.giphy.com/v1/gifs')
+          .with(query: { ids: 'ID,ID2', api_key: AppCredentials[:shared][:giphy][:api_key] })
           .to_return(
             status: 200,
             body: {
-              data: [gif]
+              data: [image, second_image]
             }.to_json
           )
       end
 
       it "returns API's response" do
-        response = described_class.get_gif(gif.id)
+        response = described_class.get_gifs([
+                                              { image.id => favorite.search_term },
+                                              { second_image.id => second_favorite.search_term }
+                                            ])
         expect(response).not_to be_empty
       end
     end
 
     context 'when API responds with error' do
       before do
-        stub_request(:get, 'https://api.giphy.com/v1/gifs/ID')
-          .with(query: { api_key: AppCredentials[:shared][:giphy][:api_key]})
+        stub_request(:get, 'https://api.giphy.com/v1/gifs')
+          .with(query: { ids: 'ID,ID2', api_key: AppCredentials[:shared][:giphy][:api_key] })
           .to_return(status: 500)
       end
 
-      it "returns nil response" do
-        expect(described_class.get_gif(gif.id)).to be_nil
+      it 'returns nil response' do
+        expect(described_class.get_gifs([
+                                          { image.id => favorite.search_term },
+                                          { second_image.id => second_favorite.search_term }
+                                        ])).to be_nil
       end
-    end  
+    end
   end
 end

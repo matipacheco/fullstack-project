@@ -1,39 +1,128 @@
+nav {
+  .navbar-brand {
+    cursor: pointer;
+  }
+
+  .button-group {
+    display: flex;
+
+    div {
+      margin: 0 0.5rem;
+    }
+
+    h3 {
+      color: white;
+      margin: 0 1rem;
+    }
+  }
+}
+
 #search {
-  max-width: 25rem;
-  margin: 2rem auto 1rem;
+  position: relative;
+  max-width: 30rem;
+  margin: 3rem auto;
   display: flex;
 
   .btn {
-    width: 20%;
+    width: 30%;
+  }
+
+  small {
+    position: absolute;
+    top: 3rem;
   }
 }
 
 #cards-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 1rem 0;
+  margin-bottom: 3rem;
 
-  .card {
-    padding: 1rem;
-    width: 20%;
+  img {
+    max-width: 100%;
+    display: block;
+  }
+  
+  figure {
+    margin: 0;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    margin-bottom: 10px;
+    break-inside: avoid;
+    justify-content: center;
+
+    [id^='toggle-heart'] {
+      position: absolute;
+      left: -100vw;
+
+      &:checked + label {
+        color: #e2264d;
+        will-change: font-size;
+        animation: heart 1s cubic-bezier(.17, .89, .32, 1.49);
+      }
+    }
+
+    [for^='toggle-heart'] {
+      align-self: center;
+      color: #aab8c2;
+      font-size: 2em;
+      cursor: pointer;
+    }
+
+    @keyframes heart {
+      0%, 15% { font-size: 0; }
+    }
   }
 
-  .card-body {
-    position: relative;
+  figure > img {
+    grid-row: 1 / -1;
+    grid-column: 1;
+  }
 
-    .card-title {
-      margin: 0 0 2rem;
-    }
+  figcaption {
+    grid-row: 2;
+    grid-column: 1;
+    background-color: rgba(255,255,255,.5);
+    padding: .2em .5em;
+    height: 3.5rem;
+    width: 3rem;
+    cursor: pointer;
+  }
 
-    button {
-      position: absolute;
-      bottom: 5px;
-    }
-  } 
+  .container {
+    column-count: 4;
+    column-gap: 10px;
+    width: 100%;
+  }
 }
 
 .empty {
-  margin: 2rem 0;
+  margin: 0;
   text-align: center;
+}
+
+.credentials-form {
+  height: 100vh;
+  position: relative;
+}
+
+.centered {
+  max-width: 35%;
+
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  img {
+    width: 100%;
+  }
+
+  h3 {
+    top: -4rem;
+    position: relative;
+    text-align: center;
+  }
+}
+
+.red {
+  color: red;
 }

@@ -8,7 +8,9 @@ module Api
     # Params:
     # - q: The search term.
     def search
-      return render json: { success: false, status: 500 } unless (response = Giphy::GifService.search(params[:q]))
+      unless (response = Giphy::GifService.search(params[:q], current_user&.favorites_search_hash))
+        return render json: { success: false, status: 500 }
+      end
 
       render json: {
         success: true,

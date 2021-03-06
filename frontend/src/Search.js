@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { AppContext } from './context/Context';
-import { search } from './utils/requests';
 import { Spinner, Button } from 'react-bootstrap';
+import { search } from './utils/requests';
+import { handleEnterKey } from './utils/accessibility';
 import _ from 'lodash';
 
 /**
@@ -11,19 +12,25 @@ import _ from 'lodash';
  */
 
 export default function Search() {
+  const searchBarRef = useRef(null);
+
   const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [emptySearchError, setEmptySearchError] = useState(false);
 
   const appContext = useContext(AppContext);
 
-  const handleSearch = () => {
-    setLoading(true);
+  useEffect(() => {
+    searchBarRef.current.focus();
+  }, []);
 
-    if (!_.isEmpty(appContext.images)) {
-      appContext.updateImages([]);
+  const handleSearch = () => {
+    if (_.isEmpty(searchBarRef.current.value)) {
+      return setEmptySearchError(true);
     }
 
-    search(searchTerm, handleSuccess, handleError);
+    setLoading(true);
+    setEmptySearchError(false);
+    search(searchBarRef.current.value, handleSuccess, handleError);
   };
 
   const handleSuccess = (response) => {
@@ -31,8 +38,9 @@ export default function Search() {
       appContext.updateError(false);
     }
 
-    appContext.updateImages(response);
     setLoading(false);
+    appContext.updateImages(response);
+    appContext.updateSearchTerm(searchBarRef.current.value);
   };
 
   const handleError = () => {
@@ -45,12 +53,6 @@ export default function Search() {
     appContext.updateError(true);
   };
 
-  const handleOnChange = (event) => {
-    event.preventDefault();
-
-    setSearchTerm(event.target.value);
-  };
-
   const handleOnClick = (event) => {
     event.preventDefault();
     handleSearch();
@@ -58,25 +60,24 @@ export default function Search() {
 
   const handleOnKeyUp = (event) => {
     event.preventDefault();
-
-    if (event.keyCode === 13 || event.key === 'ENTER') {
-      handleSearch();
-    }
+    handleEnterKey(event, handleSearch);
   };
 
   return (
     <div id="search">
       <input
         type="text"
+        ref={searchBarRef}
         className="form-control mr-sm-2"
-        placeholder="What are you looking for?"
+        placeholder="Find a cool GIF!"
         onKeyUp={handleOnKeyUp}
-        onChange={handleOnChange}
       />
 
       <Button className="btn btn-info" onClick={handleOnClick} disabled={loading}>
-        {loading ? <Spinner as="span" animation="border" variant="light" size="sm" role="status" /> : 'Search'}
+        {loading ? <Spinner as="span" animation="border" variant="light" size="sm" role="status" /> : 'Search 🔎'}
       </Button>
+
+      {emptySearchError && <small className="red">Type something out</small>}
     </div>
   );
 }
