@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Button } from 'react-bootstrap';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Spinner } from 'react-bootstrap';
 import { handleEnterKey } from './utils/accessibility';
 
 /**
@@ -9,6 +9,7 @@ import { handleEnterKey } from './utils/accessibility';
 
 export default function FavoritesFilter(props) {
   const searchBarRef = useRef(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     searchBarRef.current.focus();
@@ -25,7 +26,9 @@ export default function FavoritesFilter(props) {
   };
 
   const filterResults = () => {
+    setLoading(true);
     props.setFilterTerm(searchBarRef.current.value);
+    setLoading(false);
   };
 
   return (
@@ -40,7 +43,7 @@ export default function FavoritesFilter(props) {
 
       <Button className="btn btn-info" onClick={handleOnClick}>
         <span title="Browser you favorites" role="img" aria-label="magnifier-glass">
-          🔎
+          {loading ? <Spinner as="span" animation="border" variant="dark" size="sm" role="status" /> : '🔎'}
         </span>
       </Button>
     </div>

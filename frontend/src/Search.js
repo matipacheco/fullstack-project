@@ -29,7 +29,7 @@ export default function Search() {
     }
 
     setLoading(true);
-    setEmptySearchError(false)
+    setEmptySearchError(false);
     search(searchBarRef.current.value, handleSuccess, handleError);
   };
 
@@ -77,11 +77,7 @@ export default function Search() {
         {loading ? <Spinner as="span" animation="border" variant="light" size="sm" role="status" /> : 'Search 🔎'}
       </Button>
 
-      {
-        emptySearchError && (
-          <small className="red">Type something out</small>
-        )
-      }
+      {emptySearchError && <small className="red">Type something out</small>}
     </div>
   );
 }

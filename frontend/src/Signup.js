@@ -75,6 +75,8 @@ export default function Signup() {
       {!_.isEmpty(appContext.user) && <Redirect to="/" />}
 
       <Container className="centered">
+        <h3>Create your account</h3>
+
         <Form>
           <Form.Group>
             <Form.Label>Username</Form.Label>

@@ -41,7 +41,6 @@ export default function Login() {
       const user = response.user;
 
       appContext.updateUser(user);
-      localStorage.setItem('user', JSON.stringify(user));
     } else {
       setError(response.errors[0]);
     }
@@ -78,8 +77,10 @@ export default function Login() {
       {!_.isEmpty(appContext.user) && <Redirect to="/" />}
 
       <Container className="centered">
+        <h3>Log into your account</h3>
+
         <Form>
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group>
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
@@ -90,7 +91,7 @@ export default function Login() {
             />
           </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
+          <Form.Group>
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"

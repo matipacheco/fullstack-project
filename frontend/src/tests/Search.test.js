@@ -1,11 +1,33 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Search from '../Search';
 
-test('disables button when search is performed', async () => {
+test('Empty search returns error', async () => {
   render(<Search />);
 
-  fireEvent.click(screen.getByText('Search'));
+  fireEvent.click(screen.getByRole('button'));
 
+  expect(screen.getByText('Type something out')).toBeInTheDocument();
+});
+
+test('Submits the search and disables button after click', async () => {
+  render(<Search />);
+
+  const searchInput = screen.getByPlaceholderText('Find a cool GIF!');
+  fireEvent.change(searchInput, { target: { value: 'Some search term' } });
+  fireEvent.click(screen.getByRole('button'));
+
+  expect(screen.queryByText('Type something out')).not.toBeInTheDocument();
   expect(screen.getByRole('button')).toHaveAttribute('disabled');
 });
+
+// test('Submits the search and disables button after ENTER', async () => {
+//   render(<Search />);
+
+//   const searchInput = screen.getByPlaceholderText('Find a cool GIF!');
+//   fireEvent.change(searchInput, { target: { value: 'Some search term' } });
+//   fireEvent.keyPress(searchInput, { key: 'Enter', code: 13, charCode: 13 });
+
+//   expect(screen.queryByText('Type something out')).not.toBeInTheDocument();
+//   expect(screen.getByRole('button')).toHaveAttribute('disabled');
+// });

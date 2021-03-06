@@ -22,6 +22,10 @@ export default function Favorites() {
 
   useEffect(() => {
     const handleSuccess = (response) => {
+      if (response.errors) {
+        return handleError();
+      }
+
       setLoading(false);
       setFavorites(response.favorites);
     };
