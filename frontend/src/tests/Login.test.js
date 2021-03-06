@@ -19,3 +19,22 @@ test('Enables submit button only when all inputs are filled', async () => {
 
   expect(submitButton).not.toHaveClass('disabled');
 });
+
+
+test('Displays spinner after submit', async () => {
+  render(<Login />);
+
+  expect(screen.queryByRole('status')).not.toBeInTheDocument();
+
+  const submitButton = screen.queryByText('Login');
+
+  const usernameInput = screen.getByPlaceholderText('Enter username');
+  fireEvent.change(usernameInput, { target: { value: 'username' } });
+
+  const passwordInput = screen.getByPlaceholderText('Password');
+  fireEvent.change(passwordInput, { target: { value: 'password' } });
+
+  fireEvent.click(submitButton);
+
+  expect(screen.getByRole('status')).toBeInTheDocument();
+});

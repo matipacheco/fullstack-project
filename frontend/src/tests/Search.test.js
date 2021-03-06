@@ -20,14 +20,3 @@ test('Submits the search and disables button after click', async () => {
   expect(screen.queryByText('Type something out')).not.toBeInTheDocument();
   expect(screen.getByRole('button')).toHaveAttribute('disabled');
 });
-
-// test('Submits the search and disables button after ENTER', async () => {
-//   render(<Search />);
-
-//   const searchInput = screen.getByPlaceholderText('Find a cool GIF!');
-//   fireEvent.change(searchInput, { target: { value: 'Some search term' } });
-//   fireEvent.keyPress(searchInput, { key: 'Enter', code: 13, charCode: 13 });
-
-//   expect(screen.queryByText('Type something out')).not.toBeInTheDocument();
-//   expect(screen.getByRole('button')).toHaveAttribute('disabled');
-// });
